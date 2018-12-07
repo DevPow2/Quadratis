@@ -6,8 +6,8 @@ Communication::Communication()
 
 Communication::~Communication()
 {
-
 }
+
 void Communication::Encode()
 {
     Serial.println("Encode");
@@ -15,5 +15,5 @@ void Communication::Encode()
 
 void Communication::Decode()
 {
-     Serial.println("Decode");
+    Serial.println("Decode");
 }

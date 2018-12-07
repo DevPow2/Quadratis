@@ -3,21 +3,18 @@
 
 #include <Arduino.h>
 
-class Communication 
-{ 
-    // Access specifier 
-    public: 
+class Communication
+{
+  // Access specifier
+public:
+  // Data Members
+  // string geekname;
 
-    // Data Members 
-    // string geekname; 
-  
-    // Member Functions()
-      Communication();
-      ~Communication();
-      void Encode();
-      void Decode();
-    
-
-}; 
+  // Member Functions()
+  Communication();
+  ~Communication();
+  void Encode();
+  void Decode();
+};
 
 #endif

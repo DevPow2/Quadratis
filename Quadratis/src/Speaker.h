@@ -2,11 +2,10 @@
 #define Speaker_H
 
 #include <Arduino.h>
-#include <Output.h>
 #include "SoftwareSerial.h"
 #include "DFRobotDFPlayerMini.h"
 
-class Speaker: public Output
+class Speaker
 { 
     // Access specifier 
     public: 

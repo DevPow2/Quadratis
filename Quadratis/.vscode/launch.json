@@ -12,8 +12,8 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug",
-            "executable": "c:/Users/koenn/Documents/PlatformIO/Projects/Quadratis/.pioenvs/lolin_d32_0/firmware.elf",
-            "toolchainBinDir": "C:/SysGCC/esp8266/bin",
+            "executable": "d:/Users/Sava/OneDrive - De Haagse Hogeschool/Projects/Quadratis/Quadratis/.pioenvs/lolin_d32_0/firmware.elf",
+            "toolchainBinDir": "",
             "preLaunchTask": {
                 "type": "PlatformIO",
                 "task": "Pre-Debug"
@@ -24,8 +24,8 @@
             "type": "platformio-debug",
             "request": "launch",
             "name": "PIO Debug (skip Pre-Debug)",
-            "executable": "c:/Users/koenn/Documents/PlatformIO/Projects/Quadratis/.pioenvs/lolin_d32_0/firmware.elf",
-            "toolchainBinDir": "C:/SysGCC/esp8266/bin",
+            "executable": "d:/Users/Sava/OneDrive - De Haagse Hogeschool/Projects/Quadratis/Quadratis/.pioenvs/lolin_d32_0/firmware.elf",
+            "toolchainBinDir": "",
             "internalConsoleOptions": "openOnSessionStart"
         }
     ]
