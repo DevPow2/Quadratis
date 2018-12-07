@@ -11,6 +11,7 @@ Speaker *speaker;
 
 void setup()
 {
+
     // put your setup code here, to run once:
     Serial.begin(9800);
     comm = new Communication();
@@ -20,6 +21,15 @@ void setup()
 
 void loop()
 {
+    if (Serial.available() > 0) //read master
+    {
+        
+        String s = Serial.readString();
+
+        Serial.println(s);
+        Serial.println("bla");
+    }
+
     // put your main code here, to run repeatedly:
     // comm.Encode();
     //mpu6050.getSensorData();

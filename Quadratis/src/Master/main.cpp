@@ -1,8 +1,6 @@
 #if MASTER == 0 //master
 #include <Arduino.h>
 #include "Communication.h"
-#include "MPU6050.h"
-#include "Speaker.h"
 
 void setup()
 {
