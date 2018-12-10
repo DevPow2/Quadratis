@@ -1,17 +1,32 @@
-#if MASTER == 0 //master
+#ifdef MASTER //master
 #include <Arduino.h>
 #include "Communication.h"
+#include "SoftwareSerial.h"
 
+SoftwareSerial swSer(14, 12, false, 256);
 void setup()
 {
-    // put your setup code here, to run once:
+    Serial.begin(115200);
+    swSer.begin(115200);
+
+    Serial.println("\nSoftware serial test started");
+
+    for (char ch = ' '; ch <= 'z'; ch++)
+    {
+        swSer.write(ch);
+    }
+    swSer.println("");
 }
 
 void loop()
 {
-    // put your main code here, to run repeatedly:
-    Serial.println("adf");
-    int test = 0;
-    test = 0;
+    while (swSer.available() > 0)
+    {
+        Serial.println(swSer.read());
+    }
+    while (Serial.available() > 0)
+    {
+        swSer.write(Serial.read());
+    }
 }
 #endif

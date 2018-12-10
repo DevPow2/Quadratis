@@ -1,5 +1,4 @@
-
-#if MASTER == 1 //slave
+#ifdef SLAVE //slave
 #include <Arduino.h>
 #include "Communication.h"
 #include "MPU6050.h"
@@ -11,9 +10,8 @@ Speaker *speaker;
 
 void setup()
 {
-
     // put your setup code here, to run once:
-    Serial.begin(9800);
+    Serial.begin(115200);
     comm = new Communication();
     mpu6050 = new MPU6050();
     speaker = new Speaker();
@@ -23,17 +21,17 @@ void loop()
 {
     if (Serial.available() > 0) //read master
     {
-        
-        String s = Serial.readString();
 
-        Serial.println(s);
-        Serial.println("bla");
+        digitalWrite(LED_BUILTIN, HIGH); // turn the LED on (HIGH is the voltage level)
+        delay(1000);                     // wait for a second
+        digitalWrite(LED_BUILTIN, LOW);  // turn the LED off by making the voltage LOW
+        delay(1000);
     }
 
     // put your main code here, to run repeatedly:
     // comm.Encode();
     //mpu6050.getSensorData();
-    speaker->setMusic();
+    // speaker->setMusic();
     delay(10000);
 }
 #endif
