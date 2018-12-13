@@ -6,6 +6,12 @@ Quadratis/.vscode/.BROWSE.C_CPP.DB-wal
 Quadratis/.vscode/.BROWSE.C_CPP.DB-shm
 Quadratis/.vscode/*
 Quadratis/!.vscode/settings.json
-Quadratis!.vscode/tasks.json
-Quadratis!.vscode/launch.json
-Quadratis!.vscode/extensions.json
+Quadratis/!.vscode/tasks.json
+Quadratis/!.vscode/launch.json
+Quadratis/!.vscode/extensions.json
+Quadratis/.pio
+Quadratis/.pioenvs
+Quadratis/.piolibdeps
+Quadratis/.vscode/.browse.c_cpp.db*
+Quadratis/.vscode/c_cpp_properties.json
+Quadratis/.vscode/launch.json
