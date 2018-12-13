@@ -1,32 +1,23 @@
 #ifdef MASTER //master
 #include <Arduino.h>
 #include "Communication.h"
-#include "SoftwareSerial.h"
 
-SoftwareSerial swSer(14, 12, false, 256);
 void setup()
 {
-    Serial.begin(115200);
-    swSer.begin(115200);
-
-    Serial.println("\nSoftware serial test started");
-
-    for (char ch = ' '; ch <= 'z'; ch++)
-    {
-        swSer.write(ch);
-    }
-    swSer.println("");
+    Serial.begin(9600); //debug serial
+    Serial2.begin(9600, SERIAL_8N1, 16, 17); //communications serial
 }
 
 void loop()
 {
-    while (swSer.available() > 0)
-    {
-        Serial.println(swSer.read());
-    }
-    while (Serial.available() > 0)
-    {
-        swSer.write(Serial.read());
-    }
+
+    Serial2.write("Play song 1"); //tell the slave to play song 1
+    delay(1000);
+    // String received = "";
+    // while (Serial2.available())
+    // {
+    //     received = Serial2.read();
+    //     Serial.println(received);
+    // }
 }
 #endif

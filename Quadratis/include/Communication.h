@@ -5,16 +5,20 @@
 
 class Communication
 {
-  // Access specifier
-public:
-  // Data Members
-  // string geekname;
 
-  // Member Functions()
-  Communication();
-  ~Communication();
-  void Encode();
-  void Decode();
+private:
+  static Communication *instance;
+
+  Communication(); //Constructor
+
+public:
+  ~Communication(); //deconstructor
+
+  static Communication *getInstance();
+
+  static String split(String data, char separator, int index);
+  String readSerial();
+  void writeSerial(String message);
 };
 
 #endif

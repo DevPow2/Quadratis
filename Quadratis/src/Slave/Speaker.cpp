@@ -23,7 +23,7 @@ Speaker::Speaker()
   delay(5000);
 }
 
-Speaker::~Speaker()
+Speaker::~Speaker() //deconstructor
 {
   // mySoftwareSerial = NULL;
   myDFPlayer = NULL;
@@ -34,4 +34,22 @@ void Speaker::setMusic()
   Serial.println("sound");
   myDFPlayer->volume(30); //Set volume value. From 0 to 30
   myDFPlayer->next();     //Play the first mp3
+}
+
+void Speaker::playSong(int fileNumber)
+{
+  switch (fileNumber)
+  {
+  case 1:
+    myDFPlayer->play(1);
+    break;
+
+  case 2:
+    myDFPlayer->play(1);
+    break;
+
+  default: //todo
+    myDFPlayer->play(1);
+    break;
+  }
 }

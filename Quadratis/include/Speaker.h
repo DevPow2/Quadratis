@@ -6,23 +6,19 @@
 #include "DFRobotDFPlayerMini.h"
 
 class Speaker
-{ 
-    // Access specifier 
-    public: 
-
-    // Data Members 
-    // string geekname; 
-  
-    // Member Functions() 
+{
+  public:
     Speaker();
     ~Speaker();
     void setMusic();
+    void getSongNumber();
+    void playSong(int fileNumber);
 
   private:
-   // SoftwareSerial* mySoftwareSerial = new SoftwareSerial(D3,D4); // RX, TX
-    DFRobotDFPlayerMini* myDFPlayer = new DFRobotDFPlayerMini();
+    // SoftwareSerial* mySoftwareSerial = new SoftwareSerial(D3,D4); // RX, TX
+    DFRobotDFPlayerMini *myDFPlayer = new DFRobotDFPlayerMini();
 
     void printDetail(uint8_t type, int value);
-}; 
+};
 
 #endif
