@@ -1,11 +1,11 @@
 #include "Communication.h"
 
-Communication::Communication() //constructor
+Communication::Communication()
 {
     Serial2.begin(9600, SERIAL_8N1, TX_COMMUNICATION, RX_COMMUNICATION); //Hardware serial
 }
 
-Communication::~Communication() //deconstructor
+Communication::~Communication()
 {
 }
 

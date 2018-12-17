@@ -11,37 +11,32 @@ void core1Loop(void *parameter);
 
 void setup()
 {
-    Serial.begin(9600);                      //Debug serial
+    Serial.begin(9600); //Debug serial
 
-    //todo
     xTaskCreatePinnedToCore(core0Loop, "Workload1", 1000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
     xTaskCreatePinnedToCore(core1Loop, "Workload2", 1000, NULL, 1, &TaskB, 1);
 }
 
-void loop() {}
+void loop() {} //Dont use this
 
-void core0Loop(void *parameter)
+void core0Loop(void *parameter) //Speaker loop
 {
-    
     while (true)
     {
-        //Serial.println("testtest");
         Communication *comm = Communication::getInstance();
         String message = comm->readSerial();
-        int songNumber = comm->split(message, ',', 0).toInt();
+        int songNumber = comm->split(message, ',', 0).toInt(); //Gets the songnumber from the song command sent over the serial
+        Speaker *speaker = new Speaker();
+        speaker->playSong(songNumber);
         delay(1);
     }
 }
 
-void core1Loop(void *parameter)
+void core1Loop(void *parameter) //Gyro loop
 {
     //MPU6050 *mpu6050 = new MPU6050();
-    Speaker *speaker = new Speaker();
     while (true)
     {
-        
-         speaker->playSong(1);
-        //workLoad();
         delay(1);
     }
 }
