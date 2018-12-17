@@ -12,7 +12,6 @@ void core1Loop(void *parameter);
 void setup()
 {
     Serial.begin(9600);                      //Debug serial
-    Serial2.begin(9600, SERIAL_8N1, 16, 17); //Hardware serial
 
     //todo
     xTaskCreatePinnedToCore(core0Loop, "Workload1", 1000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
@@ -26,7 +25,7 @@ void core0Loop(void *parameter)
     
     while (true)
     {
-        Serial.println("testtest");
+        //Serial.println("testtest");
         Communication *comm = Communication::getInstance();
         String message = comm->readSerial();
         int songNumber = comm->split(message, ',', 0).toInt();

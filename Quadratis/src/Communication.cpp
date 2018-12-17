@@ -2,6 +2,7 @@
 
 Communication::Communication() //constructor
 {
+    Serial2.begin(9600, SERIAL_8N1, TX_COMMUNICATION, RX_COMMUNICATION); //Hardware serial
 }
 
 Communication::~Communication() //deconstructor
