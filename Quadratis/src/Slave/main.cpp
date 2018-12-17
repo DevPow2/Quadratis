@@ -23,24 +23,27 @@ void loop() {}
 
 void core0Loop(void *parameter)
 {
-    Speaker *speaker = new Speaker();
+    
     while (true)
     {
+        Serial.println("testtest");
         Communication *comm = Communication::getInstance();
         String message = comm->readSerial();
         int songNumber = comm->split(message, ',', 0).toInt();
-        speaker->playSong(songNumber);
+        delay(1);
     }
 }
 
 void core1Loop(void *parameter)
 {
     //MPU6050 *mpu6050 = new MPU6050();
-
+    Speaker *speaker = new Speaker();
     while (true)
     {
+        
+         speaker->playSong(1);
         //workLoad();
-        delay(10);
+        delay(1);
     }
 }
 

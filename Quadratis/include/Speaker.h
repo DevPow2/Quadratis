@@ -2,8 +2,11 @@
 #define Speaker_H
 
 #include <Arduino.h>
-#include "SoftwareSerial.h"
+#include "HardwareSerial.h"
 #include "DFRobotDFPlayerMini.h"
+
+#define TX_MP3 35
+#define RX_MP3 33
 
 class Speaker
 {
@@ -15,7 +18,6 @@ class Speaker
     void playSong(int fileNumber);
 
   private:
-    SoftwareSerial* mySoftwareSerial = new SoftwareSerial(D3,D4); // RX, TX
     DFRobotDFPlayerMini* myDFPlayer = new DFRobotDFPlayerMini();
 
     void printDetail(uint8_t type, int value);

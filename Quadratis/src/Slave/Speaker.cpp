@@ -3,13 +3,13 @@
 Speaker::Speaker()
 {
   Serial.println("TESTTT");
-   mySoftwareSerial->begin(9800);
+  Serial1.begin(9600, SERIAL_8N1, TX_MP3, RX_MP3);
   Serial.println();
   Serial.println(F("DFRobot DFPlayer Mini Demo"));
   Serial.println(F("Initializing DFPlayer ... (May take 3~5 seconds)"));
 
   
-  if (!myDFPlayer->begin(*mySoftwareSerial, true, false))
+  if (!myDFPlayer->begin(Serial1, true, false))
   { //Use softwareSerial to communicate with mp3.
     Serial.println(F("Unable to begin:"));
     Serial.println(F("1.Please recheck the connection!"));
@@ -38,6 +38,8 @@ void Speaker::setMusic()
 
 void Speaker::playSong(int fileNumber)
 {
+  Serial.print("playing number :: ");
+  Serial.println(fileNumber);
   switch (fileNumber)
   {
   case 1:
