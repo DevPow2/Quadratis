@@ -13,7 +13,7 @@ class Speaker
   public:
     Speaker();
     ~Speaker();
-    void setMusic();
+    void setVolume(int volume);
     void getSongNumber();
     void playSong(int fileNumber);
 

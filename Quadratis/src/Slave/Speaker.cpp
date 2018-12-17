@@ -24,7 +24,7 @@ Speaker::~Speaker()
 
 void Speaker::setVolume(int volume)
 {
-  myDFPlayer.volume(volume);
+  myDFPlayer->volume(volume);
 }
 
 void Speaker::playSong(int fileNumber)

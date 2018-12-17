@@ -1,14 +1,14 @@
 #include "GyroAcc.h"
 
-MPU6050::MPU6050()
+GyroAcc::GyroAcc()
 {
 }
 
-MPU6050::~MPU6050()
+GyroAcc::~GyroAcc()
 {
 }
 
-void MPU6050::getSensorData()
+void GyroAcc::getSensorData()
 {
     Serial.println("Sensordata");
 }
