@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 #include "Communication.h"
-#include "MPU6050.h"
+#include "GyroAcc.h"
 #include "Speaker.h"
 
 TaskHandle_t TaskA, TaskB;
@@ -21,12 +21,12 @@ void loop() {} //Dont use this
 
 void core0Loop(void *parameter) //Speaker loop
 {
+    Speaker *speaker = new Speaker();
     while (true)
     {
         Communication *comm = Communication::getInstance();
         String message = comm->readSerial();
         int songNumber = comm->split(message, ',', 0).toInt(); //Gets the songnumber from the song command sent over the serial
-        Speaker *speaker = new Speaker();
         speaker->playSong(songNumber);
         delay(1);
     }
@@ -34,9 +34,10 @@ void core0Loop(void *parameter) //Speaker loop
 
 void core1Loop(void *parameter) //Gyro loop
 {
-    //MPU6050 *mpu6050 = new MPU6050();
+    GyroAcc *gyroAcc = new GyroAcc();
     while (true)
     {
+        gyroAcc->getShaking();
         delay(1);
     }
 }
