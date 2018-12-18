@@ -12,7 +12,7 @@
 #endif
 
 #define NOISE 1000
-#define TRESHOLDVALUE 30000
+#define TRESHOLDVALUE 25000
 #define DEPTH 10
 #define AXES 3
 #define X 0

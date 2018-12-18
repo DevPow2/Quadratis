@@ -1,23 +1,42 @@
 #ifdef MASTER //master
 #include <Arduino.h>
+
 #include "Communication.h"
+
+TaskHandle_t TaskA, TaskB;
+void core0Loop(void *parameter);
+void core1Loop(void *parameter);
 
 void setup()
 {
-    Serial.begin(9600); //debug serial
-    Serial2.begin(9600, SERIAL_8N1, 16, 17); //communications serial
+    Serial.begin(9600); //Debug serial
+
+    xTaskCreatePinnedToCore(core0Loop, "Workload1", 1000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
+    xTaskCreatePinnedToCore(core1Loop, "Workload2", 1000, NULL, 1, &TaskB, 1);
 }
 
-void loop()
+void loop() {} //Dont use this
+
+void core0Loop(void *parameter) //Speaker loop
 {
-
-    Serial2.write("Play song 1"); //tell the slave to play song 1
-    delay(1000);
-    // String received = "";
-    // while (Serial2.available())
-    // {
-    //     received = Serial2.read();
-    //     Serial.println(received);
-    // }
+    
+    Communication *comm = Communication::getInstance();
+    while (true)
+    {
+        
+        comm->writeSerial("play song 1");
+        delay(1);
+    }
 }
+
+void core1Loop(void *parameter) //Gyro loop
+{
+    
+    while (true)
+    {
+       
+        delay(1);
+    }
+}
+
 #endif

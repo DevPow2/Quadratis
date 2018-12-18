@@ -20,8 +20,9 @@ GyroAcc::GyroAcc()
     else
     {
         Serial.println("MPU6050 connection failed, restarting.....");
-        ESP.restart();
-        delay(1000);
+         delay(1000);
+       // ESP.restart();
+       
     }
 }
 
@@ -127,7 +128,7 @@ boolean GyroAcc::handleShake(unsigned long dal[DEPTH][AXES], unsigned long top[D
       Serial.println("SCHUDDEENNNN");
       return true;
     }
-
+    
   }
   return false;
 }

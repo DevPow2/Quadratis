@@ -21,23 +21,27 @@ void loop() {} //Dont use this
 
 void core0Loop(void *parameter) //Speaker loop
 {
+    Communication *comm = Communication::getInstance();
     Speaker *speaker = new Speaker();
     while (true)
     {
-        Communication *comm = Communication::getInstance();
         String message = comm->readSerial();
         int songNumber = comm->split(message, ',', 0).toInt(); //Gets the songnumber from the song command sent over the serial
-        speaker->playSong(songNumber);
+        //speaker->playSong(1);
         delay(1);
     }
 }
 
 void core1Loop(void *parameter) //Gyro loop
 {
+    Communication *comm = Communication::getInstance();
     GyroAcc *gyroAcc = new GyroAcc();
     while (true)
     {
-        gyroAcc->getShaking();
+       if(gyroAcc->getShaking())
+       {
+           comm->writeSerial("er is geschudt");
+       }
         delay(1);
     }
 }
