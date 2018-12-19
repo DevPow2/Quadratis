@@ -5,8 +5,8 @@
 #include "HardwareSerial.h"
 #include "DFRobotDFPlayerMini.h"
 
-#define TX_MP3 35
-#define RX_MP3 33
+#define TX_MP3 32
+#define RX_MP3 27
 
 class Speaker
 {

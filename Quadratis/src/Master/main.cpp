@@ -3,9 +3,12 @@
 
 #include "Communication.h"
 
+#define LOOP while(true)
+
 TaskHandle_t TaskA, TaskB;
 void core0Loop(void *parameter);
 void core1Loop(void *parameter);
+
 
 void setup()
 {
@@ -19,22 +22,23 @@ void loop() {} //Dont use this
 
 void core0Loop(void *parameter) //Speaker loop
 {
-    
+    int i  = 0;
     Communication *comm = Communication::getInstance();
-    while (true)
+    LOOP
     {
-        
-        comm->writeSerial("play song 1");
-        delay(1);
+        //Serial.print(".");
+        comm->writeSerial("play song 1,");
+        i++;
+        vTaskDelay(10);
+        comm->writeSerial("play song 2,");
+        vTaskDelay(10);
     }
 }
 
 void core1Loop(void *parameter) //Gyro loop
 {
-    
-    while (true)
+    LOOP
     {
-       
         delay(1);
     }
 }

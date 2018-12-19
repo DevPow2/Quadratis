@@ -8,13 +8,10 @@ Speaker::Speaker()
   if (!myDFPlayer->begin(Serial1, true, false))
   {
     Serial.println("The speaker is unable to begin. Recheck the connection and insert the SD card.");
-    while (true)
-    {
-      delay(0); // Code to compatible with ESP8266 watch dog.
-    }
+    //ESP.restart();
   }
   Serial.println(F("DFPlayer Mini online."));
-  delay(5000);
+ // delay(200);
 }
 
 Speaker::~Speaker()

@@ -158,7 +158,6 @@ unsigned long GyroAcc::getTop(int16_t x)
 void GyroAcc::getAcceleration(int16_t accData[3])
 {
     accelgyro.getAcceleration(&accData[0], &accData[1], &accData[2]);
-    //accData[0] = 5;
 }
 
 void GyroAcc::getGyro(int16_t gyroData[3])
