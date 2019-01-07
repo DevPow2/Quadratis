@@ -2,44 +2,56 @@
 #include <Arduino.h>
 
 #include "Communication.h"
+#include "Snake.h"
 
 #define LOOP while(true)
 
 TaskHandle_t TaskA, TaskB;
 void core0Loop(void *parameter);
 void core1Loop(void *parameter);
-
+Communication *comm;
 
 void setup()
 {
     Serial.begin(9600); //Debug serial
-
-    xTaskCreatePinnedToCore(core0Loop, "Workload1", 1000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
-    xTaskCreatePinnedToCore(core1Loop, "Workload2", 1000, NULL, 1, &TaskB, 1);
+    comm = Communication::getInstance();
+    xTaskCreatePinnedToCore(core0Loop, "Workload1", 5000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
+    xTaskCreatePinnedToCore(core1Loop, "Workload2", 5000, NULL, 1, &TaskB, 1);
 }
 
 void loop() {} //Dont use this
 
-void core0Loop(void *parameter) //Speaker loop
+void core0Loop(void *parameter) 
 {
-    int i  = 0;
-    Communication *comm = Communication::getInstance();
+    Snake *snake = new Snake();
+    snake->moveUp();
+    snake->moveDown();
+      
+    
     LOOP
     {
-        //Serial.print(".");
         comm->writeSerial("play song 1,");
-        i++;
-        vTaskDelay(10);
+        vTaskDelay(50);
         comm->writeSerial("play song 2,");
-        vTaskDelay(10);
+        vTaskDelay(50);
     }
 }
 
-void core1Loop(void *parameter) //Gyro loop
+void core1Loop(void *parameter) 
 {
+    
     LOOP
     {
-        delay(1);
+        String message = comm->readSerial(); 
+        Serial.print(".");
+        if(message != "")
+        { 
+            Serial.println("message received:");
+            comm->writeSerial(",");
+            Serial.println(message);
+            Serial.println("master");
+        }
+        vTaskDelay(50);
     }
 }
 

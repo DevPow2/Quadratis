@@ -11,7 +11,8 @@ Speaker::Speaker()
     //ESP.restart();
   }
   Serial.println(F("DFPlayer Mini online."));
- // delay(200);
+  // delay(200);
+  vTaskDelay(200);
 }
 
 Speaker::~Speaker()

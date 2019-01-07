@@ -6,6 +6,7 @@ Game::Game()
 
 Game::~Game()
 {
+    
 }
 
 void Game::getApp()

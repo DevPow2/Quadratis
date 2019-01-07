@@ -20,9 +20,8 @@ GyroAcc::GyroAcc()
     else
     {
         Serial.println("MPU6050 connection failed, restarting.....");
-         delay(1000);
-       // ESP.restart();
-       
+        vTaskDelay(1000);
+        ESP.restart();
     }
 }
 
