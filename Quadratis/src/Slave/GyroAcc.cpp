@@ -2,36 +2,84 @@
 
 GyroAcc::GyroAcc()
 {
-    #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
-        Wire.begin();
-    #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
-        Fastwire::setup(400, true);
-    #endif
-    Serial.println("Initializing I2C devices...");
-    accelgyro.initialize();
+#if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
+  Wire.begin();
+#elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
+  Fastwire::setup(400, true);
+#endif
+  Serial.println("Initializing I2C devices...");
+  accelgyro.initialize();
 
-    // verify connection
-    Serial.println("Testing device connections...");
-    
-    if(accelgyro.testConnection())
-    {
-        Serial.println("MPU6050 connection successful");
-    }
-    else
-    {
-        Serial.println("MPU6050 connection failed, restarting.....");
-        vTaskDelay(1000);
-        ESP.restart();
-    }
+  // verify connection
+  Serial.println("Testing device connections...");
+
+  if (accelgyro.testConnection())
+  {
+    Serial.println("MPU6050 connection successful");
+  }
+  else
+  {
+    Serial.println("MPU6050 connection failed, restarting.....");
+    vTaskDelay(1000);
+    ESP.restart();
+  }
 }
 
 GyroAcc::~GyroAcc()
 {
 }
 
-void GyroAcc::getSensorData()
+int GyroAcc::getSensorData()
 {
-    
+  int16_t accArray[3];
+  getAcceleration(accArray);
+
+  unsigned long currentMillis = millis();
+
+  int xAng = map(accArray[0], minVal, maxVal, -90, 90);
+  int yAng = map(accArray[1], minVal, maxVal, -90, 90);
+  int zAng = map(accArray[2], minVal, maxVal, -90, 90);
+
+  x = RAD_TO_DEG * (atan2(-yAng, -zAng) + 3.14159265358979323846);
+  y = RAD_TO_DEG * (atan2(-xAng, -zAng) + 3.14159265358979323846);
+  z = RAD_TO_DEG * (atan2(-yAng, -xAng) + 3.14159265358979323846);
+
+  // Kantel naar achter
+  if (y >= 40 && y <= 140)
+  {
+    screenOff = 1;
+  }
+
+  // Onderste Boven
+  if (x >= 140 && x <= 210 && y >= 140 && y <= 270)
+  {
+    screenOff = 2;
+  }
+
+  // Kantel naar voren
+  if (y >= 240 && y <= 310 && z >= 150)
+  {
+    screenOff = 3;
+  }
+
+  // Normaal
+  if (x >= 337 || x <= 40 && y >= 337 || y <= 22)
+  {
+    screenOff = 4;
+  }
+
+  // Kantel naar links
+  if (x >= 240 && x <= 300 && y >= 180)
+  {
+    screenOff = 5;
+  }
+
+  // Kantel naar rechts
+  if (x >= 60 && x <= 150 && y >= 210 && z <= 120)
+  {
+    screenOff = 6;
+  }
+  return screenOff;
 }
 
 boolean GyroAcc::getShaking()
@@ -41,7 +89,8 @@ boolean GyroAcc::getShaking()
 
   unsigned long currentMillis = millis();
 
-  if (currentMillis - previousMillis > INTERVAL) {
+  if (currentMillis - previousMillis > INTERVAL)
+  {
     previousMillis = currentMillis;
     if (!topMode)
     {
@@ -54,13 +103,11 @@ boolean GyroAcc::getShaking()
       if (tempY != 0)
       {
         dal[dalCounter][Y] = tempY;
-
       }
       unsigned long tempZ = getDal(accArray[2]);
       if (tempZ != 0)
       {
         dal[dalCounter][Y] = tempZ;
-
       }
       if (tempX != 0 || tempY != 0 || tempZ != 0)
       {
@@ -83,7 +130,6 @@ boolean GyroAcc::getShaking()
       if (tempZ != 0)
       {
         top[topCounter][Z] = tempZ;
-
       }
       if (tempX != 0 || tempY != 0 || tempZ != 0)
       {
@@ -103,7 +149,6 @@ boolean GyroAcc::getShaking()
   }
   return false;
 }
-
 
 boolean GyroAcc::handleShake(unsigned long dal[DEPTH][AXES], unsigned long top[DEPTH][AXES])
 {
@@ -127,7 +172,6 @@ boolean GyroAcc::handleShake(unsigned long dal[DEPTH][AXES], unsigned long top[D
       Serial.println("SCHUDDEENNNN");
       return true;
     }
-    
   }
   return false;
 }
@@ -152,15 +196,13 @@ unsigned long GyroAcc::getTop(int16_t x)
   return 0;
 }
 
-
-
 void GyroAcc::getAcceleration(int16_t accData[3])
 {
-    accelgyro.getAcceleration(&accData[0], &accData[1], &accData[2]);
+  accelgyro.getAcceleration(&accData[0], &accData[1], &accData[2]);
 }
 
 void GyroAcc::getGyro(int16_t gyroData[3])
 {
-    
-    accelgyro.getAcceleration(&gyroData[0], &gyroData[1], &gyroData[2]);
+
+  accelgyro.getAcceleration(&gyroData[0], &gyroData[1], &gyroData[2]);
 }

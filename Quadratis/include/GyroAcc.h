@@ -8,7 +8,7 @@
 // Arduino Wire library is required if I2Cdev I2CDEV_ARDUINO_WIRE implementation
 // is used in I2Cdev.h
 #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
-    #include "Wire.h"
+#include "Wire.h"
 #endif
 
 #define NOISE 1000
@@ -34,25 +34,26 @@ public:
   boolean getShaking();
 
 private:
-    MPU6050 accelgyro;
-    
-    int16_t lastTop = 0;
-    int16_t lastDal = 0;
-    unsigned long dal[DEPTH][AXES] = {{0, 0}};
-    unsigned long top[DEPTH][AXES] = {{0, 0}};
+  MPU6050 accelgyro;
 
-    int topCounter = 0;
-    int dalCounter = 0;
+  int screenOff = 0;
+  int16_t lastTop = 0;
+  int16_t lastDal = 0;
+  unsigned long dal[DEPTH][AXES] = {{0, 0}};
+  unsigned long top[DEPTH][AXES] = {{0, 0}};
 
-    long previousMillis = 0;
+  int topCounter = 0;
+  int dalCounter = 0;
 
-    boolean topMode = true;
+  long previousMillis = 0;
 
-    void getAcceleration(int16_t accData[3]);
-    void getGyro(int16_t gyroData[3]);
-    boolean handleShake(unsigned long dal[DEPTH][AXES], unsigned long top[DEPTH][AXES]);
-    unsigned long getDal(int16_t x);
-    unsigned long getTop(int16_t x);
+  boolean topMode = true;
+
+  void getAcceleration(int16_t accData[3]);
+  void getGyro(int16_t gyroData[3]);
+  boolean handleShake(unsigned long dal[DEPTH][AXES], unsigned long top[DEPTH][AXES]);
+  unsigned long getDal(int16_t x);
+  unsigned long getTop(int16_t x);
 };
 
 #endif
