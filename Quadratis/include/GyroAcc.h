@@ -30,13 +30,17 @@ public:
   // Member Functions()
   GyroAcc();
   ~GyroAcc();
-  void getSensorData();
+  int getSensorData();
   boolean getShaking();
 
 private:
   MPU6050 accelgyro;
 
   int screenOff = 0;
+  int minVal=265; int maxVal=402;
+
+  double x; double y; double z;
+
   int16_t lastTop = 0;
   int16_t lastDal = 0;
   unsigned long dal[DEPTH][AXES] = {{0, 0}};
