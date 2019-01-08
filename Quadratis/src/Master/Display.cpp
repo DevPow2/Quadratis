@@ -2,22 +2,18 @@
 
 Display::Display()
 {
-
-    // pinMode(MOSI, OUTPUT);
-    // pinMode(SCK, OUTPUT);
-    // pinMode(5, OUTPUT);
-
-    displays[0] = new Adafruit_ILI9341(27, 21, 32);
-    
-    displays[1] = new Adafruit_ILI9341(22, 21);
-    displays[2] = new Adafruit_ILI9341(25, 21);
-    displays[3] = new Adafruit_ILI9341(26, 21);
-    
+    pinMode(12, OUTPUT);
+    pinMode(13, OUTPUT);
+    pinMode(14, OUTPUT);
+    displays[0] = new Adafruit_ILI9341(27, 21, 13, 14, 32);
+    displays[1] = new Adafruit_ILI9341(22, 21, 13, 14);
+    displays[2] = new Adafruit_ILI9341(25, 21, 13, 14);
+    displays[3] = new Adafruit_ILI9341(26, 17);
 
     for (int i = 0; i < AMOUNT_DISPLAYS; i++)
     {
         displays[i]->begin();
-        displays[i]->setRotation(3);
+        displays[i]->setRotation(1);
     }
     //displays[1]->begin();
     // displays[1]->begin();
@@ -50,7 +46,7 @@ Display::~Display()
 
 void Display::update()
 {
-    for(int i = 0; i < AMOUNT_DISPLAYS; i++) { displays[i]->fillScreen(ILI9341_BLACK); }
+  //  for(int i = 0; i < AMOUNT_DISPLAYS; i++) { displays[i]->fillScreen(ILI9341_BLACK); }
     for(int i = 0; i < AMOUNT_DISPLAYS; i++) { displays[i]->fillScreen(ILI9341_GREEN); }
     for(int i = 0; i < AMOUNT_DISPLAYS; i++) { displays[i]->fillScreen(ILI9341_BLUE); }
     for(int i = 0; i < AMOUNT_DISPLAYS; i++) { displays[i]->fillScreen(ILI9341_RED); }
