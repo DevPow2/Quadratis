@@ -2,17 +2,16 @@
 
 Display::Display()
 {
-    pinMode(12, OUTPUT);
-    pinMode(13, OUTPUT);
-    pinMode(14, OUTPUT);
-    displays[0] = new Adafruit_ILI9341(27, 21, 13, 14, 32);
-    displays[1] = new Adafruit_ILI9341(22, 21, 13, 14);
-    displays[2] = new Adafruit_ILI9341(25, 21, 13, 14);
-    displays[3] = new Adafruit_ILI9341(26, 17);
+   
+    displays[0] = new Adafruit_ILI9341(27, 32);
+    displays[1] = new Adafruit_ILI9341(22, 32);
+    displays[2] = new Adafruit_ILI9341(25, 32);
+    displays[3] = new Adafruit_ILI9341(26, 32);
+  
 
     for (int i = 0; i < AMOUNT_DISPLAYS; i++)
     {
-        displays[i]->begin();
+        displays[i]->begin(10000000);
         displays[i]->setRotation(1);
     }
     //displays[1]->begin();
@@ -20,24 +19,24 @@ Display::Display()
      //displays[0]->begin();
      
 // displays[1]->begin();
-    for(int i = 0; i < AMOUNT_DISPLAYS; i++) 
-    {
-        uint8_t x = displays[i]->readcommand8(ILI9341_RDMODE);
-        Serial.print("Display Power Mode: 0x");
-        Serial.println(x, HEX);
-        x = displays[i]->readcommand8(ILI9341_RDMADCTL);
-        Serial.print("MADCTL Mode: 0x");
-        Serial.println(x, HEX);
-        x = displays[i]->readcommand8(ILI9341_RDPIXFMT);
-        Serial.print("Pixel Format: 0x");
-        Serial.println(x, HEX);
-        x = displays[i]->readcommand8(ILI9341_RDIMGFMT);
-        Serial.print("Image Format: 0x");
-        Serial.println(x, HEX);
-        x = displays[i]->readcommand8(ILI9341_RDSELFDIAG);
-        Serial.print("Self Diagnostic: 0x");
-        Serial.println(x, HEX);
-    }
+    // for(int i = 0; i < AMOUNT_DISPLAYS; i++) 
+    // {
+    //     uint8_t x = displays[i]->readcommand8(ILI9341_RDMODE);
+    //     Serial.print("Display Power Mode: 0x");
+    //     Serial.println(x, HEX);
+    //     x = displays[i]->readcommand8(ILI9341_RDMADCTL);
+    //     Serial.print("MADCTL Mode: 0x");
+    //     Serial.println(x, HEX);
+    //     x = displays[i]->readcommand8(ILI9341_RDPIXFMT);
+    //     Serial.print("Pixel Format: 0x");
+    //     Serial.println(x, HEX);
+    //     x = displays[i]->readcommand8(ILI9341_RDIMGFMT);
+    //     Serial.print("Image Format: 0x");
+    //     Serial.println(x, HEX);
+    //     x = displays[i]->readcommand8(ILI9341_RDSELFDIAG);
+    //     Serial.print("Self Diagnostic: 0x");
+    //     Serial.println(x, HEX);
+    // }
 }
 
 Display::~Display()
@@ -47,15 +46,33 @@ Display::~Display()
 void Display::update()
 {
   //  for(int i = 0; i < AMOUNT_DISPLAYS; i++) { displays[i]->fillScreen(ILI9341_BLACK); }
-    for(int i = 0; i < AMOUNT_DISPLAYS; i++) { displays[i]->fillScreen(ILI9341_GREEN); }
-    for(int i = 0; i < AMOUNT_DISPLAYS; i++) { displays[i]->fillScreen(ILI9341_BLUE); }
-    for(int i = 0; i < AMOUNT_DISPLAYS; i++) { displays[i]->fillScreen(ILI9341_RED); }
-    for(int i = 0; i < AMOUNT_DISPLAYS; i++) { displays[i]->fillScreen(ILI9341_YELLOW); }
-    for(int i = 0; i < AMOUNT_DISPLAYS; i++) { displays[i]->fillScreen(ILI9341_GREENYELLOW); }
-    //  displays[0]->fillScreen(ILI9341_BLUE);
-    //  displays[1]->fillScreen(ILI9341_BLUE);
-    //  displays[2]->fillScreen(ILI9341_BLUE);
-    //  displays[0]->fillScreen(ILI9341_RED);
-    //  displays[1]->fillScreen(ILI9341_RED);
-    //  displays[2]->fillScreen(ILI9341_RED);
+  for (int i = 0; i < AMOUNT_DISPLAYS; i++)
+  {
+      displays[i]->fillScreen(ILI9341_GREEN);
+  }
+//   for (int i = 0; i < AMOUNT_DISPLAYS; i++)
+//   {
+//       displays[i]->fillScreen(ILI9341_BLUE);
+//   }
+//   for (int i = 0; i < AMOUNT_DISPLAYS; i++)
+//   {
+//       displays[i]->fillScreen(ILI9341_RED);
+//   }
+//   for (int i = 0; i < AMOUNT_DISPLAYS; i++)
+//   {
+//       displays[i]->fillScreen(ILI9341_YELLOW);
+//   }
+//   for (int i = 0; i < AMOUNT_DISPLAYS; i++)
+//   {
+//       displays[i]->fillScreen(ILI9341_GREENYELLOW);
+//   }
+   displays[3]->fillScreen(ILI9341_CYAN);
+   displays[2]->fillScreen(ILI9341_BLUE);
+   displays[1]->fillScreen(ILI9341_GREEN);
+   displays[0]->fillScreen(ILI9341_RED);
+  //  displays[1]->fillScreen(ILI9341_BLUE);
+  //  displays[2]->fillScreen(ILI9341_BLUE);
+  //  displays[0]->fillScreen(ILI9341_RED);
+  //  displays[1]->fillScreen(ILI9341_RED);
+  //  displays[2]->fillScreen(ILI9341_RED);
 }
