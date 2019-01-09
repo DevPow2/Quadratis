@@ -25,6 +25,7 @@ class Display
     ~Display();
     void update();
   private:
+  int i = 0;
     Adafruit_ILI9341* displays[AMOUNT_DISPLAYS] = {0};
 
 };
