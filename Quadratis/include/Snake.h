@@ -4,32 +4,46 @@
 #include <Arduino.h>
 #include "Game.h"
 
-struct {
-  int x;
-  int y;
-} snake;
-
 //https://github.com/mouboo/snake/blob/master/snake.ino
 class Snake : Game
 {
-    // Access specifier
-  public:
-    // Data Members
-    // string geekname;
-    
-    // Member Functions()
-    Snake();
-    ~Snake();
-    void showStartScreen();
-    void showEndScreen();
-    void reset();
-    int  collision();
-    void grow();
-    void generateSnack();
-    void moveUp();
-    void moveDown();
-    void moveRight();
-    void moveLeft();
+  struct snack
+  {
+    int x;
+    int y;
+  };
+
+  struct location
+  {
+    int x = 90;
+    int y = 90;
+  };
+
+public:
+  int width = 30;
+  const int height = 30;
+
+  snack snack;
+  location location;
+  Snake(Display *displayTemp);
+  ~Snake();
+  void init();
+  // void showStartScreen();
+  // void showEndScreen();
+  void clearObject(int x, int y);
+  void reset();
+  bool collision();
+  void grow();
+  void generateSnack();
+  void move(int stepSize);
+  void moveUp();
+  void moveDown();
+  void moveRight();
+  void moveLeft();
+
+private:
+  Display *displays;
+  Adafruit_ILI9341 *temp[1];
 };
 
 #endif

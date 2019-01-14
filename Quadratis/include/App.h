@@ -5,13 +5,7 @@
 
 class App
 {
-
-  // Access specifier
 public:
-  // Data Members
-  // string geekname;
-
-  // Member Functions()
   virtual void getApp() = 0;
 };
 
