@@ -18,3 +18,4 @@ Quadratis/.vscode/launch.json
 Quadratis/.gitignore
 *.json
 Quadratis/.clang_complete
+Quadratis/platformio.ini

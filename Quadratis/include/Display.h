@@ -6,7 +6,7 @@
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
 
-#define AMOUNT_DISPLAYS 5
+#define AMOUNT_DISPLAYS 2
 #define MOSI 23
 #define SCK 18
 
@@ -25,7 +25,7 @@ class Display
     ~Display();
     void update();
   private:
-  int i = 0;
+    int i = 0;
     Adafruit_ILI9341* displays[AMOUNT_DISPLAYS] = {0};
 
 };

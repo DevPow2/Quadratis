@@ -27,7 +27,8 @@ void core0Loop(void *parameter) //Speaker loop
 {
     
     Speaker *speaker = new Speaker();
-    
+    // speaker->setVolume(30);
+    // speaker->playSong(1);
     LOOP
     {
         String message = comm->readSerial();
@@ -44,7 +45,8 @@ void core0Loop(void *parameter) //Speaker loop
             // int songNumber = comm->split(message, ',', 0).toInt(); //Gets the songnumber from the song command sent over the serial
             // speaker->playSong(songNumber);
         }
-        vTaskDelay(10);
+        
+        vTaskDelay(1000);
     }
 }
 

@@ -39,7 +39,7 @@ void core0Loop(void *parameter)
     //     comm->writeSerial("play song 1,");
     //    vTaskDelay(50);
     //    comm->writeSerial("play song 2,");
-        vTaskDelay(50);
+        vTaskDelay(1);
     }
 }
 

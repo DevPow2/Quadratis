@@ -43,4 +43,5 @@ void Speaker::playSong(int fileNumber)
     myDFPlayer->play(1);
     break;
   }
+  // myDFPlayer->next();
 }
