@@ -6,7 +6,7 @@
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
 
-#define AMOUNT_DISPLAYS 1
+#define AMOUNT_DISPLAYS 2
 #define MOSI 23
 #define SCK 18
 
@@ -18,14 +18,12 @@ class Display
 {
 public:
   Display();
-  void update();
-  int i = 0;
   ~Display();
+  void drawPixel(int x, int y, int color);
+  void update();
   void clearPixel(int x, int y, int color);
-  //int startPos = 100;
   void drawRect(int x, int y, int w, int h, int color);
-  Adafruit_ILI9341 *displayArr[AMOUNT_DISPLAYS] = {0};
-  //240 x 320
+  Adafruit_ILI9341 *displayArr[AMOUNT_DISPLAYS] = {0}; //240 x 320
 };
 
 #endif

@@ -7,35 +7,44 @@
 //https://github.com/mouboo/snake/blob/master/snake.ino
 class Snake : Game
 {
-  struct snack
+  struct food
   {
     int x;
     int y;
   };
 
-  struct location
+  struct snake
   {
-    int x = 90;
-    int y = 90;
+    int headX = 0;
+    int headY = 30;
+    int beenHeadX[470] = {0};
+    int beenHeadY[470] = {0};
+    int changeX = 0;
+    int changeY = 0;
+    const int width = 10;
+    const int height = 10;
   };
 
 public:
-  int width = 30;
-  const int height = 30;
-
-  snack snack;
-  location location;
+int borderX = 10;
+  const int stepSize = 10;
+  int score = 1;
+  int counter = 0;
+  int clearPoint = 0;
+  food food;
+  snake snake;
+  //int snake [];
   Snake(Display *displayTemp);
   ~Snake();
   void init();
   // void showStartScreen();
   // void showEndScreen();
   void clearObject(int x, int y);
-  void reset();
-  bool collision();
+  // void reset();
+  bool eaten();
   void grow();
-  void generateSnack();
-  void move(int stepSize);
+  void generateFood();
+  void move();
   void moveUp();
   void moveDown();
   void moveRight();

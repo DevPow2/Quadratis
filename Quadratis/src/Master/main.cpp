@@ -14,8 +14,8 @@ void setup()
     Serial.begin(9600); //Debug serial
     comm = Communication::getInstance();
 
-    xTaskCreatePinnedToCore(core0Loop, "Workload0", 50000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
-    xTaskCreatePinnedToCore(core1Loop, "Workload1", 50000, NULL, 1, &TaskB, 1);
+    xTaskCreatePinnedToCore(core0Loop, "Workload0", 2000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
+    xTaskCreatePinnedToCore(core1Loop, "Workload1", 10000, NULL, 1, &TaskB, 1);
 }
 
 void loop() {} //Dont use this
@@ -24,25 +24,44 @@ void core0Loop(void *parameter)
 {
 
     Snake *snake = new Snake(new Display()); //initializes the snake in the constructor
-
-    snake->generateSnack();
-   snake->move(10);
-   snake->move(10);
-   snake->move(10);
-
     while (true)
     {
-        if (snake->collision() == true)
-        {
-            Serial.print("loser");
-        }
+        // snake->moveUp();
+        // vTaskDelay(200);
+        // snake->moveRight();
+        // vTaskDelay(200);
+        // snake->moveDown();
+        // vTaskDelay(200);
+        snake->moveLeft();
+        // snake->moveDown();
+        // snake->moveLeft();
 
-        snake->move(10);
+        
 
+        // snake->moveUp();
+        // snake->moveLeft();
         //     comm->writeSerial("play song 1,");
         //    vTaskDelay(50);
         //    comm->writeSerial("play song 2,");
-        vTaskDelay(100);
+      //  vTaskDelay(200);
+       // snake->moveUp();
+        // vTaskDelay(50);
+        // snake->moveUp();
+        // vTaskDelay(50);
+        // snake->moveUp();
+        // vTaskDelay(50);
+        // snake->moveUp();
+        // vTaskDelay(50);
+        // snake->moveDown();
+        // vTaskDelay(50);
+        // snake->moveDown();
+        // vTaskDelay(50);
+        // snake->moveDown();
+        // vTaskDelay(50);
+        // snake->moveDown();
+        // vTaskDelay(50);
+        // snake->moveLeft();
+        vTaskDelay(50);
     }
 }
 

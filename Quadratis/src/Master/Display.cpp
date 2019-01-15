@@ -8,9 +8,13 @@ Display::Display() // initialize all displays
     // displays[3] = new Adafruit_ILI9341(27, 5);
     displayArr[0] = new Adafruit_ILI9341(2, 5);
     displayArr[0]->begin(15000000);
+    displayArr[0]->fillScreen(ILI9341_BLACK);
+    displayArr[0]->setRotation(1);
 
-    displayArr[0]->fillScreen(ILI9341_WHITE);
-    displayArr[0]->setRotation(2);
+    displayArr[1] = new Adafruit_ILI9341(27, 5);
+    displayArr[1]->begin(15000000);
+    displayArr[1]->fillScreen(ILI9341_BLUE);
+    displayArr[1]->setRotation(1);
     // for (int i = 0; i < AMOUNT_DISPLAYS; i++)
     // {
     //     displays[i]->begin(15000000);
@@ -19,10 +23,6 @@ Display::Display() // initialize all displays
     //     else
     //         displays[i]->setRotation(1);
     // }
-}
-
-Display::~Display()
-{
 }
 
 void Display::clearPixel(int x, int y, int color)
@@ -34,9 +34,16 @@ void Display::drawRect(int x, int y, int w, int h, int color)
 {
     //displayArr[0]->fillScreen(ILI9341_WHITE);
     displayArr[0]->fillRect(x, y, h, w, color);
-   // startPos = startPos + 5;
+    // startPos = startPos + 5;
 }
 
+void Display::drawPixel(int x, int y, int color)
+{
+    // if (x > 320)
+    // {
+    //     snake.headX = 320;
+    // }
+}
 void Display::update()
 {
 
@@ -75,3 +82,5 @@ void Display::update()
     //       displays[i]->fillScreen(ILI9341_GREENYELLOW);
     //   }
 }
+
+Display::~Display() {}

@@ -3,99 +3,128 @@
 Snake::Snake(Display *displayTemp) //constructor
 {
     displays = displayTemp;
-    init();
-    //temp[0] = displays->displayArr[0];
 
+    displays->drawRect(snake.headX, snake.headY, snake.width, snake.height, ILI9341_WHITE);
+    displays->drawRect(0, 0, borderX, 320, ILI9341_YELLOW);
+    displays->drawRect(0, (240 - borderX), borderX, 320, ILI9341_YELLOW);
+    generateFood();
+
+    //temp[0] = displays->displayArr[0];
     //displayArr[0].fillRect(100, 100, 100, 20, ILI9341_BLACK);
 }
-void Snake::init()
+
+void Snake::generateFood()
 {
-    // displays->drawRect(100, 100, width, height);
+    // int bla = 240 / 30;
+    // int bla2 = 320 / 30;
+    food.x = 0;
+    food.y = 30;
+    displays->drawRect(food.x, food.y, snake.width, snake.height, ILI9341_BLUE); //draws a blue rectangle
 }
 
-void Snake::generateSnack()
+bool Snake::eaten()
 {
-
-int bla = 240/30;
-int bla2 = 320/30;
-    snack.x = random(0, bla) * 30;
-    snack.y = random(0, bla2) * 30;
-
-    // snack.x = 200;
-    // snack.y = 100;
-    displays->drawRect(snack.x, snack.y, width, height, ILI9341_BLUE);
-}
-
-bool Snake::collision()
-{
-    if (location.x == snack.x && location.y == snack.y)
+    Serial.println(snake.headX);
+    Serial.println("bla");
+    Serial.println(food.x);
+    if (snake.headX == food.x && snake.headY == food.y) //change to range?
     {
-        clearObject(snack.x, snack.y);
-        generateSnack();
+
+        Serial.print("true");
+        clearObject(food.x, food.y);
+        score++;
         return true;
     }
+    //Serial.print("false");
 
     return false;
 }
 
 void Snake::clearObject(int x, int y)
 {
-    for (int j = y; j < y + height; j++)
+    for (int i = y; i < y + snake.height; i++)
     {
-
-        for (int i = x; i < x + width; i++)
+        for (int j = x; j < x + snake.width; j++)
         {
-            displays->clearPixel(i, j, ILI9341_WHITE);
+            displays->clearPixel(j, i, ILI9341_BLACK);
         }
     }
 }
 
-void Snake::move(int stepSize)
+void Snake::move()
 {
-    for (int j = location.y; j < location.y + height; j++)
-    {
 
-        for (int i = location.x; i < location.x + width; i++)
-        {
-            displays->clearPixel(i, j, ILI9341_WHITE);
-        }
-    }
-    if (location.x > 235)
+    snake.beenHeadX[counter] = snake.headX; //adds current head coordinates to be
+    snake.beenHeadY[counter] = snake.headY; //covered later
+
+    snake.headX = snake.headX + snake.changeX; //head moved
+    snake.headY = snake.headY + snake.changeY;
+
+    if (eaten() == true)
     {
-        location.x = 0;
+        Serial.print("You just ate a snack!");
+        //play sound
+        generateFood();
+        grow();
     }
 
-    location.x = location.x + stepSize;
-    displays->drawRect(location.x, location.y, width, height, ILI9341_BLACK);
+    counter++;
+    if (counter > 467)
+    {
+        clearPoint = counter - score;
+        counter = 0;
+    }
+    displays->drawRect(snake.headX, snake.headY, snake.width, snake.height, ILI9341_WHITE);
+
+  
+    if (counter - score >= 0)
+    {
+        clearObject(snake.beenHeadX[counter - score], snake.beenHeadY[counter - score]);
+    }
+    else
+    {
+        clearObject(snake.beenHeadX[clearPoint], snake.beenHeadY[clearPoint]);
+        clearPoint += 1;
+    }
 }
-// void Snake::Update()
-// {
 
-//     y = y + 5;
-//     //displays[0]->fillRect(100, 100, 100, 20, ILI9341_BLACK);
-// }
+void Snake::grow()
+{
+    //snake.beenHeadX;
+}
 
-// void Snake::move(int stepSize)
-// {
-//     displays->drawRect();
-// }
+void Snake::moveUp()
+{
 
-// void Snake::moveUp()
-// {
+    snake.changeX = 0; //changes the direction of the snake
+    snake.changeY = 10;
+    //displays[0]->fillRect(100, 100, 100, 20, ILI9341_BLACK);
+    move();
+}
 
-//     y = y + 5;
-//     //displays[0]->fillRect(100, 100, 100, 20, ILI9341_BLACK);
-// }
-// void Snake::moveDown()
-// {
-//     y = y - 5;
-// }
-// void Snake::moveLeft()
-// {
-//     x = x - 5;
-// }
-// void Snake::moveRight()
-// {
-//     x = x + 5;
-// }
-Snake::~Snake() {}
+void Snake::moveDown()
+{
+    snake.changeX = 0; //changes the direction of the snake
+    snake.changeY = -10;
+    //displays[0]->fillRect(100, 100, 100, 20, ILI9341_BLACK);
+    move();
+}
+
+void Snake::moveRight()
+{
+    snake.changeX = 10; //changes the direction of the snake
+    snake.changeY = 0;
+    move();
+    //displays[0]->fillRect(100, 100, 100, 20, ILI9341_BLACK);
+}
+
+void Snake::moveLeft()
+{
+    snake.changeX = -10; //changes the direction of the snake
+    snake.changeY = 0;
+    move();
+    //displays[0]->fillRect(100, 100, 100, 20, ILI9341_BLACK);
+}
+Snake::~Snake()
+{
+}
