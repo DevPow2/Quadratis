@@ -13,7 +13,7 @@ Display::Display() // initialize all displays
 
     displayArr[1] = new Adafruit_ILI9341(27, 5);
     displayArr[1]->begin(15000000);
-    displayArr[1]->fillScreen(ILI9341_BLUE);
+    displayArr[1]->fillScreen(ILI9341_BLACK);
     displayArr[1]->setRotation(1);
     // for (int i = 0; i < AMOUNT_DISPLAYS; i++)
     // {
@@ -36,13 +36,45 @@ void Display::drawRect(int x, int y, int w, int h, int color)
     displayArr[0]->fillRect(x, y, h, w, color);
     // startPos = startPos + 5;
 }
-
+void Display::drawRectAllDisplays(int x, int y, int w, int h, int color)
+{
+    //displayArr[0]->fillScreen(ILI9341_WHITE);
+    for(int i = 0; i < AMOUNT_DISPLAYS; i++) displayArr[i]->fillRect(x, y, h, w, color);
+    // startPos = startPos + 5;
+}
 void Display::drawPixel(int x, int y, int color)
 {
-    // if (x > 320)
-    // {
-    //     snake.headX = 320;
-    // }
+    
+}
+void Display::fillRect(int x, int y, int w, int h, int color)
+{
+    displayArr[0]->fillRect(x, y, w, h, color);
+}
+
+void Display::fillRectAllDisplays(int x, int y, int w, int h, int color)
+{
+    for(int i = 0; i < AMOUNT_DISPLAYS; i++) displayArr[i]->fillRect(x, y, w, h, color);
+}
+
+void Display::setCursor(int x, int y)
+{
+    for(int i = 0; i < AMOUNT_DISPLAYS; i++)  displayArr[i]->setCursor(x,y);
+}
+void Display::print(const char* x)
+{
+   for(int i = 0; i < AMOUNT_DISPLAYS; i++)  displayArr[i]->print(x);
+}
+void Display::print(int x)
+{
+    for(int i = 0; i < AMOUNT_DISPLAYS; i++) displayArr[i]->print(x);
+}
+void Display::setTextColor(int color)
+{
+    for(int i = 0; i < AMOUNT_DISPLAYS; i++) displayArr[i]->setTextColor(color);
+}
+void Display::setTextSize(int size)
+{
+    for(int i = 0; i < AMOUNT_DISPLAYS; i++) displayArr[i]->setTextSize(size);
 }
 void Display::update()
 {

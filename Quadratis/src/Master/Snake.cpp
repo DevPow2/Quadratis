@@ -5,31 +5,44 @@ Snake::Snake(Display *displayTemp) //constructor
     displays = displayTemp;
 
     displays->drawRect(snake.headX, snake.headY, snake.width, snake.height, ILI9341_WHITE);
-    displays->drawRect(0, 0, borderX, 320, ILI9341_YELLOW);
-    displays->drawRect(0, (240 - borderX), borderX, 320, ILI9341_YELLOW);
-    generateFood();
+    displays->drawRectAllDisplays(0, 0, borderX, borderY, ILI9341_YELLOW);
+    displays->drawRectAllDisplays(SCREEN_X_SIZE-borderY, 0, borderX, borderY, ILI9341_YELLOW);
+    
+    displays->drawRectAllDisplays(0, SCREEN_Y_SIZE-10, borderX, borderY, ILI9341_YELLOW);
+    displays->drawRectAllDisplays(320-30, 240-10, 10, 30, ILI9341_YELLOW);
+     memset(snake.beenHeadX, 0, 470); //initiate beenHead with a bunch of zeros
+     memset(snake.beenHeadY, 0, 470);
+     // displays->drawRect(0, (240 - borderX), borderX, 320, ILI9341_YELLOW);
 
-    //temp[0] = displays->displayArr[0];
-    //displayArr[0].fillRect(100, 100, 100, 20, ILI9341_BLACK);
+     generateFood();
+     
+    displays->setTextColor(ILI9341_WHITE); //Score keeper
+    displays->setTextSize(2);
+    displays->setCursor(45, 3);
+    displays->print("Length: ");
+    printScore();
+
+     //temp[0] = displays->displayArr[0];
+     //displayArr[0].fillRect(100, 100, 100, 20, ILI9341_BLACK);
 }
 
 void Snake::generateFood()
 {
     // int bla = 240 / 30;
     // int bla2 = 320 / 30;
-    food.x = 0;
+    food.x = 100;
     food.y = 30;
     displays->drawRect(food.x, food.y, snake.width, snake.height, ILI9341_BLUE); //draws a blue rectangle
 }
 
 bool Snake::eaten()
 {
-    Serial.println(snake.headX);
-    Serial.println("bla");
-    Serial.println(food.x);
+    // Serial.println(snake.headX);
+    // Serial.println("bla");
+    // Serial.println(food.x);
     if (snake.headX == food.x && snake.headY == food.y) //change to range?
     {
-
+        printScore();
         Serial.print("true");
         clearObject(food.x, food.y);
         score++;
@@ -74,12 +87,17 @@ void Snake::move()
         clearPoint = counter - score;
         counter = 0;
     }
+    if (snake.headX > 270)
+    {
+        snake.headX = 30;
+    }
     displays->drawRect(snake.headX, snake.headY, snake.width, snake.height, ILI9341_WHITE);
 
   
     if (counter - score >= 0)
     {
         clearObject(snake.beenHeadX[counter - score], snake.beenHeadY[counter - score]);
+        
     }
     else
     {
@@ -125,6 +143,14 @@ void Snake::moveLeft()
     move();
     //displays[0]->fillRect(100, 100, 100, 20, ILI9341_BLACK);
 }
+void Snake::printScore()
+{
+   
+  displays->fillRectAllDisplays(130, 3, 50, 16, ILI9341_BLACK);//clears old score
+  displays->setCursor(130, 3);
+  displays->print(score);                            //prints current score}
+}
+
 Snake::~Snake()
 {
 }

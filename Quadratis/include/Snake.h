@@ -15,10 +15,10 @@ class Snake : Game
 
   struct snake
   {
-    int headX = 0;
+    int headX = 30;
     int headY = 30;
-    int beenHeadX[470] = {0};
-    int beenHeadY[470] = {0};
+    int beenHeadX[470];
+    int beenHeadY[470];
     int changeX = 0;
     int changeY = 0;
     const int width = 10;
@@ -26,7 +26,8 @@ class Snake : Game
   };
 
 public:
-int borderX = 10;
+  int borderX = 10;
+  int borderY = 30;
   const int stepSize = 10;
   int score = 1;
   int counter = 0;
@@ -49,6 +50,7 @@ int borderX = 10;
   void moveDown();
   void moveRight();
   void moveLeft();
+  void printScore();
 
 private:
   Display *displays;
