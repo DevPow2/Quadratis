@@ -32,7 +32,7 @@ void core0Loop(void *parameter)
         // vTaskDelay(200);
         // snake->moveDown();
         // vTaskDelay(200);
-        snake->moveRight();
+        snake->move();
         // snake->moveDown();
         // snake->moveLeft();
 
@@ -61,7 +61,7 @@ void core0Loop(void *parameter)
         // snake->moveDown();
         // vTaskDelay(50);
         // snake->moveLeft();
-        vTaskDelay(50);
+        vTaskDelay(500);
     }
 }
 

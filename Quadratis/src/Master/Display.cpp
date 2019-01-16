@@ -2,6 +2,7 @@
 
 Display::Display() // initialize all displays
 {
+    displaylocation.displayNumber = 0;
     //displays[0] = new Adafruit_ILI9341(4, 5);
     //displays[1] = new Adafruit_ILI9341(32, 5);
     // displays[2] = new Adafruit_ILI9341(22, 5);
@@ -25,94 +26,164 @@ Display::Display() // initialize all displays
     // }
 }
 
-void Display::clearPixel(int x, int y, int color)
+void Display::clearPixel(int display, int x, int y, int color)
 {
-    displayArr[0]->drawPixel(x, y, color);
+    displayArr[display]->drawPixel(x, y, color);
 }
 
-void Display::drawRect(int x, int y, int w, int h, int color)
+void Display::drawRect(int display, int x, int y, int w, int h, int color)
 {
-    //displayArr[0]->fillScreen(ILI9341_WHITE);
-    displayArr[0]->fillRect(x, y, h, w, color);
-    // startPos = startPos + 5;
+    for (int i = y; i < y + h; i++)
+    {
+        for (int j = x; j < x + w; j++)
+        {
+            displayArr[display]->drawPixel(j, i, color);
+        }
+    }
 }
 void Display::drawRectAllDisplays(int x, int y, int w, int h, int color)
 {
-    //displayArr[0]->fillScreen(ILI9341_WHITE);
-    for(int i = 0; i < AMOUNT_DISPLAYS; i++) displayArr[i]->fillRect(x, y, h, w, color);
-    // startPos = startPos + 5;
+    for (int i = 0; i < AMOUNT_DISPLAYS; i++)
+        displayArr[i]->fillRect(x, y, h, w, color);
 }
-void Display::drawPixel(int x, int y, int color)
+
+void Display::fillRect(int display, int x, int y, int w, int h, int color)
 {
-    
-}
-void Display::fillRect(int x, int y, int w, int h, int color)
-{
-    displayArr[0]->fillRect(x, y, w, h, color);
+    for (int i = y; i < y + h; i++)
+    {
+        for (int j = x; j < x + w; j++)
+        {
+            displayArr[display]->drawPixel(j, i, color);
+        }
+    }
 }
 
 void Display::fillRectAllDisplays(int x, int y, int w, int h, int color)
 {
-    for(int i = 0; i < AMOUNT_DISPLAYS; i++) displayArr[i]->fillRect(x, y, w, h, color);
+    for (int i = 0; i < AMOUNT_DISPLAYS; i++)
+        displayArr[i]->fillRect(x, y, w, h, color);
 }
 
 void Display::setCursor(int x, int y)
 {
-    for(int i = 0; i < AMOUNT_DISPLAYS; i++)  displayArr[i]->setCursor(x,y);
+    for (int i = 0; i < AMOUNT_DISPLAYS; i++)
+        displayArr[i]->setCursor(x, y);
 }
-void Display::print(const char* x)
+void Display::print(const char *x)
 {
-   for(int i = 0; i < AMOUNT_DISPLAYS; i++)  displayArr[i]->print(x);
+    for (int i = 0; i < AMOUNT_DISPLAYS; i++)
+        displayArr[i]->print(x);
 }
 void Display::print(int x)
 {
-    for(int i = 0; i < AMOUNT_DISPLAYS; i++) displayArr[i]->print(x);
+    for (int i = 0; i < AMOUNT_DISPLAYS; i++)
+        displayArr[i]->print(x);
 }
 void Display::setTextColor(int color)
 {
-    for(int i = 0; i < AMOUNT_DISPLAYS; i++) displayArr[i]->setTextColor(color);
+    for (int i = 0; i < AMOUNT_DISPLAYS; i++)
+        displayArr[i]->setTextColor(color);
 }
 void Display::setTextSize(int size)
 {
-    for(int i = 0; i < AMOUNT_DISPLAYS; i++) displayArr[i]->setTextSize(size);
+    for (int i = 0; i < AMOUNT_DISPLAYS; i++)
+        displayArr[i]->setTextSize(size);
 }
 void Display::update()
 {
-
-    // if (i > 240)
-    // {
-
-    //     displays[3]->fillScreen(ILI9341_BLACK);
-    //     i = 0;
-    // }
-    // i += 10;
-    // displays[3]->fillTriangle(0, 0, i, i, i, 0, ILI9341_BLUE);
-    // displays[4]->drawFastVLine(10, 10, 100, ILI9341_BLUE);
-    // displays[2]->fillTriangle(0, 0, 40, 40, 80, 0, ILI9341_BLUE);
-    // displays[1]->drawFastVLine(10, 10, 100, ILI9341_BLUE);
-    // displays[0]->fillTriangle(0, 0, 40, 40, 80, 0, ILI9341_BLUE);
-    // displays[3]->drawFastVLine(10, 10, 100, ILI9341_BLUE);
-
-    //   for (int i = 0; i < AMOUNT_DISPLAYS; i++)
-    //   {
-    //       displays[i]->fillScreen(ILI9341_GREEN);
-    //   }
-    //   for (int i = 0; i < AMOUNT_DISPLAYS; i++)
-    //   {
-    //       displays[i]->fillScreen(ILI9341_BLUE);
-    //   }
-    //   for (int i = 0; i < AMOUNT_DISPLAYS; i++)
-    //   {
-    //       displays[i]->fillScreen(ILI9341_RED);
-    //   }
-    //   for (int i = 0; i < AMOUNT_DISPLAYS; i++)
-    //   {
-    //       displays[i]->fillScreen(ILI9341_YELLOW);
-    //   }
-    //   for (int i = 0; i < AMOUNT_DISPLAYS; i++)
-    //   {
-    //       displays[i]->fillScreen(ILI9341_GREENYELLOW);
-    //   }
 }
 
 Display::~Display() {}
+
+int Display::getCurrentDisplay()
+{
+    return displaylocation.displayNumber;
+}
+
+int Display::checkCollision(int *x, int *y, int *changeX, int *changeY)
+{
+    if (*x < 0)
+    {
+        if ((*y / 2) > (SCREEN_Y_SIZE / 2))
+        {
+            *x = *y + ((SCREEN_X_SIZE - SCREEN_Y_SIZE) / 2);
+        }
+        else if ((*y / 2) < (SCREEN_Y_SIZE / 2))
+        {
+            *x = *y - ((SCREEN_X_SIZE - SCREEN_Y_SIZE) / 2);
+        }
+        *y = 220;
+        *changeY = -10;
+        *changeX = 0;
+        displaylocation.direction = B;
+        return true;
+    }
+    else if (*x > 320)
+    {
+        if ((*y / 2) > (SCREEN_Y_SIZE / 2))
+        {
+            *x = *y + ((SCREEN_X_SIZE - SCREEN_Y_SIZE) / 2);
+        }
+        else if ((*y / 2) < (SCREEN_Y_SIZE / 2))
+        {
+            *x = *y - ((SCREEN_X_SIZE - SCREEN_Y_SIZE) / 2);
+        }
+         *y = 0;
+         *changeY = 10;
+         *changeX = 0;
+         displaylocation.direction = D;
+        return true;
+    }
+    else if (*y < 0)
+    {
+        if ((*x / 2) > (SCREEN_X_SIZE / 2))
+        {
+            *y = *x - ((SCREEN_X_SIZE - SCREEN_Y_SIZE) / 2);
+        }
+        else if ((*x / 2) < (SCREEN_X_SIZE / 2))
+        {
+            *y = *x + ((SCREEN_X_SIZE - SCREEN_Y_SIZE) / 2);
+        }
+         *x = 340;
+         *changeX = -10;
+         *changeY = 0;
+         displaylocation.direction = A;
+        return true;
+    }
+    else if (*y > 240)
+    {
+        if ((*x / 2) > (SCREEN_X_SIZE / 2))
+        {
+            *y = *x - ((SCREEN_X_SIZE - SCREEN_Y_SIZE) / 2) - 20;
+        }
+        else if ((*x / 2) < (SCREEN_X_SIZE / 2))
+        {
+            *y = *x + ((SCREEN_X_SIZE - SCREEN_Y_SIZE) / 2) + 20;
+        }
+         *x = 0;
+         *changeX = 10; 
+         *changeY = 0;
+         displaylocation.direction = C;
+        return true;
+    }
+    return false;
+}
+
+int Display::getNextScreen()
+{
+    for ( int i = 0; i < 12; i++){ // rows
+      for ( int j = 0; j < 2; j++){ // columns
+        if(screenIndex[i][j].direction == displaylocation.direction && screenIndex[i][j].displayNumber == displaylocation.displayNumber){
+          Serial.println();
+          Serial.println(screenIndex[i][j].displayNumber);
+          Serial.println(screenIndex[i][j].direction);
+          Serial.println(displaylocation.displayNumber);
+          Serial.println(displaylocation.direction);
+          Serial.println(screenIndex[i][abs(j-1)].displayNumber);
+          Serial.println("-----------------------------------");
+          return screenIndex[i][abs(j-1)].displayNumber; // will return an 1 when 0 or 0 when 1
+        }
+      }
+    }
+    return -1;
+}

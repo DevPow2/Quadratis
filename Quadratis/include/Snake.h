@@ -11,23 +11,25 @@ class Snake : Game
   {
     int x;
     int y;
+    int display;
   };
 
   struct snake
   {
-    int headX = 30;
-    int headY = 30;
+    int headX = 100;
+    int headY = 100;
     int beenHeadX[470];
     int beenHeadY[470];
+    int beenHeadOnDisplay[470];
     int changeX = 0;
-    int changeY = 0;
+    int changeY = 10;
     const int width = 10;
     const int height = 10;
   };
 
 public:
   int borderX = 10;
-  int borderY = 30;
+  int borderY = 40;
   const int stepSize = 10;
   int score = 1;
   int counter = 0;
@@ -40,7 +42,7 @@ public:
   void init();
   // void showStartScreen();
   // void showEndScreen();
-  void clearObject(int x, int y);
+  void clearObject(int display, int x, int y);
   // void reset();
   bool eaten();
   void grow();
@@ -54,6 +56,7 @@ public:
 
 private:
   Display *displays;
+  int currentDisplay = 0;
   Adafruit_ILI9341 *temp[1];
 };
 
