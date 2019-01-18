@@ -3,27 +3,26 @@
 Display::Display() // initialize all displays
 {
     displaylocation.displayNumber = 0;
-    //displays[0] = new Adafruit_ILI9341(4, 5);
-    //displays[1] = new Adafruit_ILI9341(32, 5);
-    // displays[2] = new Adafruit_ILI9341(22, 5);
-    // displays[3] = new Adafruit_ILI9341(27, 5);
-    displayArr[0] = new Adafruit_ILI9341(2, 5);
-    displayArr[0]->begin(15000000);
-    displayArr[0]->fillScreen(ILI9341_BLACK);
-    displayArr[0]->setRotation(1);
+    displayArr[0] = new Adafruit_ILI9341(4, 5);
+    displayArr[1] = new Adafruit_ILI9341(32, 5);
+    displayArr[2] = new Adafruit_ILI9341(22, 5);
+    displayArr[3] = new Adafruit_ILI9341(27, 5);
 
-    displayArr[1] = new Adafruit_ILI9341(27, 5);
-    displayArr[1]->begin(15000000);
-    displayArr[1]->fillScreen(ILI9341_BLACK);
-    displayArr[1]->setRotation(1);
-    // for (int i = 0; i < AMOUNT_DISPLAYS; i++)
-    // {
-    //     displays[i]->begin(15000000);
-    //     if (i < 3)
-    //         displays[i]->setRotation(3);
-    //     else
-    //         displays[i]->setRotation(1);
-    // }
+    displayArr[4] = new Adafruit_ILI9341(2, 5);
+    // displayArr[0]->begin(15000000);
+    // displayArr[0]->fillScreen(ILI9341_BLACK);
+    // displayArr[0]->setRotation(1);
+
+    // displayArr[1] = new Adafruit_ILI9341(27, 5);
+    // displayArr[1]->begin(15000000);
+    // displayArr[1]->fillScreen(ILI9341_BLACK);
+    // displayArr[1]->setRotation(1);
+    
+    for (int i = 0; i < AMOUNT_DISPLAYS; i++)
+    {
+      displayArr[i]->begin(15000000);
+      
+    }
 }
 
 void Display::clearPixel(int display, int x, int y, int color)

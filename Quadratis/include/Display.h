@@ -6,7 +6,7 @@
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
 
-#define AMOUNT_DISPLAYS 2
+#define AMOUNT_DISPLAYS 4
 #define SCREEN_X_SIZE 320
 #define SCREEN_Y_SIZE 240
 
