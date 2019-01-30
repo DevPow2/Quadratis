@@ -12,6 +12,7 @@ GyroAcc::GyroAcc()
 
   // verify connection
   Serial.println("Testing device connections...");
+  
 
   if (accelgyro.testConnection())
   {

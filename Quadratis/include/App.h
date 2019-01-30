@@ -3,10 +3,19 @@
 
 #include <Arduino.h>
 
+
+struct Info
+{
+  String gameName;
+  String fileNameLogo;
+};
+
 class App
 {
+
 public:
-  virtual void getApp() = 0;
+  virtual Info getInfo() = 0;
+  virtual void run() = 0;
 };
 
 #endif

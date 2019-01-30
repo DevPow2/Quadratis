@@ -1,11 +1,11 @@
 #include "Snake.h"
 
-Snake::Snake(Display *displayTemp) //constructor
+Snake::Snake(Display *display)
 {
     memset(snake.beenHeadX, 0, 470); //initiate beenHead with a bunch of zeros
     memset(snake.beenHeadY, 0, 470);
     memset(snake.beenHeadOnDisplay, 0, 470);
-    displays = displayTemp;
+    displays = display;
 
     displays->drawRect(snake.beenHeadOnDisplay[counter], snake.headX, snake.headY, snake.width, snake.height, ILI9341_WHITE);
     displays->drawRectAllDisplays(0, 0, borderX, borderY, ILI9341_YELLOW);
@@ -27,6 +27,14 @@ Snake::Snake(Display *displayTemp) //constructor
 
     //temp[0] = displays->displayArr[0];
     //displayArr[0].fillRect(100, 100, 100, 20, ILI9341_BLACK);
+}
+
+Info Snake::getInfo()
+{
+    Info info;
+    info.gameName = "Snake";
+    info.fileNameLogo = "snake.bmp";
+    return info;
 }
 
 void Snake::generateFood()
@@ -68,7 +76,7 @@ void Snake::clearObject(int display, int x, int y)
     }
 }
 
-void Snake::move()
+void Snake::run() 
 {
 
     snake.beenHeadX[counter] = snake.headX; //adds current head coordinates to be

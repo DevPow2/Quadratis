@@ -1,18 +1,33 @@
 #ifndef Game_H
 #define Game_H
 
-#include <Arduino.h>
 #include <App.h>
-#include "Adafruit_GFX.h"
-#include "Adafruit_ILI9341.h"
 #include "Display.h"
+// #include "Snake.h"
+// #include "FlappyBird.h"
+#include <Arduino.h>
+// #include "Adafruit_GFX.h"
+// #include "Adafruit_ILI9341.h"
 
-class Game : App
+#define AMOUNT_GAMES 2
+
+
+class Game
 {
+
 public:
   Game();
-  ~Game();
-  void getApp();
+  virtual ~Game() = 0;
+  virtual Info getInfo() = 0;
+  virtual void run() = 0;
+  void addGame(int x, Game* game);
+  Game* getCurrentGame();
+  void setCurrentGame(int game);
+
+
+private:
+  Game *currentGame = NULL;
+  Game *listOfGames[AMOUNT_GAMES] = {0};
 };
 
 #endif

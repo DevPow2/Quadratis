@@ -5,7 +5,7 @@
 #include "Game.h"
 
 //https://github.com/mouboo/snake/blob/master/snake.ino
-class Snake : Game
+class Snake : public Game
 {
   struct food
   {
@@ -28,6 +28,14 @@ class Snake : Game
   };
 
 public:
+  Snake(Display *display);
+  ~Snake();
+  Info getInfo() override;
+  void run() override;
+
+private:
+  Display *displays;
+  int currentDisplay = 0;
   int borderX = 10;
   int borderY = 40;
   const int stepSize = 10;
@@ -36,28 +44,18 @@ public:
   int clearPoint = 0;
   food food;
   snake snake;
-  //int snake [];
-  Snake(Display *displayTemp);
-  ~Snake();
-  void init();
-  // void showStartScreen();
-  // void showEndScreen();
-  void clearObject(int display, int x, int y);
-  // void reset();
-  bool eaten();
-  void grow();
-  void generateFood();
-  void move();
+  Adafruit_ILI9341 *temp[1];
+
   void moveUp();
   void moveDown();
   void moveRight();
   void moveLeft();
   void printScore();
-
-private:
-  Display *displays;
-  int currentDisplay = 0;
-  Adafruit_ILI9341 *temp[1];
+  void init();
+  void clearObject(int display, int x, int y);
+  bool eaten();
+  void grow();
+  void generateFood();
 };
 
 #endif

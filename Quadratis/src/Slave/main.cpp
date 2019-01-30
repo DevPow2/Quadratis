@@ -18,7 +18,7 @@ void setup()
     Serial.begin(9600); //Debug serial
     comm = Communication::getInstance();
     xTaskCreatePinnedToCore(core0Loop, "Workload1", 5000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
-    xTaskCreatePinnedToCore(core1Loop, "Workload2", 5000, NULL, 1, &TaskB, 1);
+   // xTaskCreatePinnedToCore(core1Loop, "Workload2", 5000, NULL, 1, &TaskB, 1);
 }
 
 void loop() {} //Dont use this
@@ -27,9 +27,12 @@ void core0Loop(void *parameter) //Speaker loop
 {
     
     Speaker *speaker = new Speaker();
+    speaker->setVolume(30);
+   
     
     LOOP
     {
+        speaker->playSong(1);
         String message = comm->readSerial();
         if(message != "")
         { 
@@ -44,22 +47,22 @@ void core0Loop(void *parameter) //Speaker loop
             // int songNumber = comm->split(message, ',', 0).toInt(); //Gets the songnumber from the song command sent over the serial
             // speaker->playSong(songNumber);
         }
-        vTaskDelay(10);
+        vTaskDelay(10000);
     }
 }
 
-void core1Loop(void *parameter) //Gyro loop
-{
-    GyroAcc *gyroAcc = new GyroAcc();
-    LOOP
-    {
-        if(gyroAcc->getShaking())
-        {
-            comm->writeSerial("KABOEM KAPOT,");
-        }
-       // comm->writeSerial("KABOEM KAPOT,");
-        vTaskDelay(10);
-    }
-}
+// void core1Loop(void *parameter) //Gyro loop
+// {
+//     // GyroAcc *gyroAcc = new GyroAcc();
+//     // LOOP
+//     // {
+//     //     if(gyroAcc->getShaking())
+//     //     {
+//     //         comm->writeSerial("KABOEM KAPOT,");
+//     //     }
+//     //    // comm->writeSerial("KABOEM KAPOT,");
+//         vTaskDelay(10);
+//     // }
+// }
 
 #endif

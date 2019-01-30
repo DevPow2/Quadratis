@@ -5,6 +5,7 @@
 
 #define TX_COMMUNICATION 16
 #define RX_COMMUNICATION 17
+
 class Communication
 {
 
