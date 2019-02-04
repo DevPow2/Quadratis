@@ -33,7 +33,7 @@ Info Snake::getInfo()
 {
     Info info;
     info.gameName = "Snake";
-    info.fileNameLogo = "snake.bmp";
+    // info.image = snakeImage;
     return info;
 }
 

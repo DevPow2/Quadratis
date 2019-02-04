@@ -13,7 +13,7 @@ FlappyBird::~FlappyBird()
 Info getInfo()
 {
     Info info;
-    info.fileNameLogo = "FlappyBird.bmp";
+    //info.image = 0;
     info.gameName = "Flappy Bird";
     return info;
 }

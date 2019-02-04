@@ -2,13 +2,14 @@
 #define Display_H
 
 #include <Arduino.h>
+#include "App.h"
 #include "SPI.h"
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
 #include "XPT2046_Touchscreen.h"
 #include <SD.h>
 
-#define AMOUNT_DISPLAYS 6
+#define AMOUNT_DISPLAYS 1
 #define AMOUNT_TOUCH 1
 #define SCREEN_X_SIZE 320
 #define SCREEN_Y_SIZE 240
@@ -23,6 +24,8 @@
 #define MAX_SPI_FREQUENCY 80000000
 #define AMOUNT_OF_SPI 5 //remove when everything is done
 #define SPI_FREQUENCY ((MAX_SPI_FREQUENCY / AMOUNT_OF_SPI) - 2000000)
+
+
 
 struct Coordinates
 {
@@ -65,7 +68,7 @@ public:
   void setTextSize(int size);
   int checkCollision(int* x, int* y, int *changeX, int *changeY);
   int getNextScreen();
-  void bmpDraw(int display, String filename, int x, int y);
+  void bmpDraw(int display, Image image, int x, int y);
   Coordinates getTouch(int display);
 
 private:

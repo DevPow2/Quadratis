@@ -9,7 +9,8 @@
 // #include "Adafruit_GFX.h"
 // #include "Adafruit_ILI9341.h"
 
-#define AMOUNT_GAMES 2
+#define AMOUNT_GAMES 1
+
 
 
 class Game
@@ -20,10 +21,9 @@ public:
   virtual ~Game() = 0;
   virtual Info getInfo() = 0;
   virtual void run() = 0;
-  void addGame(int x, Game* game);
-  Game* getCurrentGame();
+  void addGame(int x, Game *game);
+  Game *getCurrentGame();
   void setCurrentGame(int game);
-
 
 private:
   Game *currentGame = NULL;
