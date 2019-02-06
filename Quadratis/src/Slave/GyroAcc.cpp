@@ -30,9 +30,9 @@ GyroAcc::~GyroAcc()
 {
 }
 
-int GyroAcc::getSensorData()
+int GyroAcc::getDirection()
 {
-  int16_t accArray[3];
+   int16_t accArray[3];
   getAcceleration(accArray);
 
   unsigned long currentMillis = millis();
@@ -45,42 +45,165 @@ int GyroAcc::getSensorData()
   y = RAD_TO_DEG * (atan2(-xAng, -zAng) + 3.14159265358979323846);
   z = RAD_TO_DEG * (atan2(-yAng, -xAng) + 3.14159265358979323846);
 
-  // Kantel naar achter
-  if (y >= 40 && y <= 140)
-  {
-    screenOff = 1;
+  int screenOff = getScreenOff(x,y,z);
+  int direction = getControls(prevScreen, screenOff);
+  prevScreen = screenOff;
+  return direction;
+
+}
+int GyroAcc::getControls(int prevScreen, int screenOff) {
+
+  // Screen 1
+  if (prevScreen == 1) {
+    if (screenOff == 3) {
+      Serial.println("Move Forward");
+      return 1;
+    }
+    if (screenOff == 5) {
+      Serial.println("Move Backwards");
+      return 2;
+    }
+    if (screenOff == 2) {
+      Serial.println("Move Right");
+      return 3;
+    }
+    if (screenOff == 4) {
+      Serial.println("Move Left");
+      return 4;
+    }
   }
 
-  // Onderste Boven
-  if (x >= 140 && x <= 210 && y >= 140 && y <= 270)
-  {
+  // Screen 2
+  if (prevScreen == 2) {
+    if (screenOff == 3) {
+      Serial.println("Move Forward");
+      return 1;
+    }
+    if (screenOff == 5) {
+      Serial.println("Move Backwards");
+      return 2;
+    }
+    if (screenOff == 6) {
+      Serial.println("Move Right");
+      return 3;
+    }
+    if (screenOff == 1) {
+      Serial.println("Move Left");
+      return 4;
+    }
+  }
+
+  // Screen 3
+  if (prevScreen == 3) {
+    if (screenOff == 4) {
+      Serial.println("Move Forward");
+      return 1;
+    }
+    if (screenOff == 2) {
+      Serial.println("Move Backwards");
+      return 2;
+    }
+    if (screenOff == 6) {
+      Serial.println("Move Right");
+      return 3;
+    }
+    if (screenOff == 1) {
+      Serial.println("Move Left");
+      return 4;
+    }
+  }
+
+  // Screen 4
+  if (prevScreen == 4) {
+    if (screenOff == 5) {
+      Serial.println("Move Forward");
+      return 1;
+    }
+    if (screenOff == 3) {
+      Serial.println("Move Backwards");
+      return 2;
+    }
+    if (screenOff == 6) {
+      Serial.println("Move Right");
+      return 3;
+    }
+    if (screenOff == 1) {
+      Serial.println("Move Left");
+      return 4;
+    }
+  }
+
+  // Screen 5
+  if (prevScreen == 5) {
+    if (screenOff == 2) {
+      Serial.println("Move Forward");
+      return 1;
+    }
+    if (screenOff == 4) {
+      Serial.println("Move Backwards");
+      return 2;
+    }
+    if (screenOff == 6) {
+      Serial.println("Move Right");
+      return 3;
+    }
+    if (screenOff == 1) {
+      Serial.println("Move Left");
+      return 4;
+    }
+  }
+
+  // Screen 6
+  if (prevScreen == 6) {
+    if (screenOff == 3) {
+      Serial.println("Move Forward");
+      return 1;
+    }
+    if (screenOff == 5) {
+      Serial.println("Move Backwards");
+      return 2;
+    }
+    if (screenOff == 4) {
+      Serial.println("Move Right");
+      return 3;
+    }
+    if (screenOff == 2) {
+      Serial.println("Move Left");
+      return 4;
+    }
+  }
+  return -1;
+}
+int GyroAcc::getScreenOff(int16_t x, int16_t y, int16_t z)
+{
+ if ((y >= 45 && y <= 135) && (x >= 90) && (z >= 315 || z <= 45)) {
     screenOff = 2;
   }
 
   // Kantel naar voren
-  if (y >= 240 && y <= 310 && z >= 150)
-  {
-    screenOff = 3;
-  }
-
-  // Normaal
-  if (x >= 337 || x <= 40 && y >= 337 || y <= 22)
-  {
-    screenOff = 4;
-  }
-
-  // Kantel naar links
-  if (x >= 240 && x <= 300 && y >= 180)
-  {
+  if ((x >= 135 && x <= 225) && (y >= 135 && y <= 225) ) {
     screenOff = 5;
   }
 
+  // Onderste Boven
+  if ((x >= 180 && x <= 270) && (y >= 225 && y <= 315) && (z >= 135 && z <= 225)) {
+    screenOff = 4;
+  }
+
+  // Kanel naar voren
+  if ((x >= 315 || x <= 45 ) && (y >= 315 || y <= 45) && (z >= 180 && z <= 270)) {
+    screenOff = 3;
+  }
+
+  // Kantel naar links
+  if ((x >= 225 && x <= 315) && (y >= 180 && y <= 270) && (z >= 225 && z <= 315)) {
+    screenOff = 1;
+  }
+
   // Kantel naar rechts
-  if (x >= 60 && x <= 150 && y >= 210 && z <= 120)
-  {
+  if ((x >= 45 && x <= 135) && (y >= 180 && y <= 270) && (z <= 135 && z >= 45)) {
     screenOff = 6;
   }
-  return screenOff;
 }
 
 boolean GyroAcc::getShaking()

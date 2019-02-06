@@ -19,3 +19,4 @@ Quadratis/.gitignore
 *.json
 Quadratis/.clang_complete
 Quadratis/platformio.ini
+Quadratis/include/Wifi_Credentials.h

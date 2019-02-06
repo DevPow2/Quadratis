@@ -22,16 +22,13 @@
 
 class GyroAcc
 {
-  // Access specifier
+  
 public:
-  // Data Members
-  // string geekname;
-
-  // Member Functions()
   GyroAcc();
   ~GyroAcc();
-  int getSensorData();
+  int getControls(int prevScreen, int screenOff);
   boolean getShaking();
+  int getDirection();
 
 private:
   MPU6050 accelgyro;
@@ -58,6 +55,11 @@ private:
   boolean handleShake(unsigned long dal[DEPTH][AXES], unsigned long top[DEPTH][AXES]);
   unsigned long getDal(int16_t x);
   unsigned long getTop(int16_t x);
+
+  int prevScreen = -1;
+
+  int getScreenOff(int16_t x, int16_t y, int16_t z);
+  
 };
 
 #endif

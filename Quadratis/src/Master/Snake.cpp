@@ -1,12 +1,13 @@
 #include "Snake.h"
 
-Snake::Snake(Display *display)
+Snake::Snake(Communication* comm, Display_Master *display)
 {
     memset(snake.beenHeadX, 0, 470); //initiate beenHead with a bunch of zeros
     memset(snake.beenHeadY, 0, 470);
     memset(snake.beenHeadOnDisplay, 0, 470);
     displays = display;
-
+    comm = comm;
+    comm->writeSerial("Play song,");
     displays->drawRect(snake.beenHeadOnDisplay[counter], snake.headX, snake.headY, snake.width, snake.height, ILI9341_WHITE);
     displays->drawRectAllDisplays(0, 0, borderX, borderY, ILI9341_YELLOW);
     displays->drawRectAllDisplays(SCREEN_X_SIZE - borderY, 0, borderX, borderY, ILI9341_YELLOW);
@@ -33,7 +34,6 @@ Info Snake::getInfo()
 {
     Info info;
     info.gameName = "Snake";
-    // info.image = snakeImage;
     return info;
 }
 
@@ -49,9 +49,6 @@ void Snake::generateFood()
 
 bool Snake::eaten()
 {
-    // Serial.println(snake.headX);
-    // Serial.println("bla");
-    // Serial.println(food.x);
     if (snake.headX == food.x && snake.headY == food.y) //change to range?
     {
         printScore();
@@ -60,8 +57,6 @@ bool Snake::eaten()
         score++;
         return true;
     }
-    //Serial.print("false");
-
     return false;
 }
 
@@ -81,6 +76,27 @@ void Snake::run()
 
     snake.beenHeadX[counter] = snake.headX; //adds current head coordinates to be
     snake.beenHeadY[counter] = snake.headY; //covered later
+    String message = comm->readSerial();
+    if(strstr(message.c_str(), "1"))
+    {
+        //move forward
+    }
+    if(strstr(message.c_str(), "2"))
+    {
+        //move backwards
+    }
+    if(strstr(message.c_str(), "3"))
+    {
+        snake.changeX = 0;
+        snake.changeY = 10;
+        //move right
+    }
+    if(strstr(message.c_str(), "4"))
+    {
+        snake.changeX = 10;
+        snake.changeY = 0;
+        //move left
+    }
 
     snake.headX = snake.headX + snake.changeX; //head moved
     snake.headY = snake.headY + snake.changeY;
@@ -127,41 +143,9 @@ void Snake::run()
 
 void Snake::grow()
 {
-    //snake.beenHeadX;
+    
 }
 
-// void Snake::moveUp()
-// {
-
-//     snake.changeX = 0; //changes the direction of the snake
-//     snake.changeY = 10;
-//     //displays[0]->fillRect(100, 100, 100, 20, ILI9341_BLACK);
-//     move();
-// }
-
-// void Snake::moveDown()
-// {
-//     snake.changeX = 0; //changes the direction of the snake
-//     snake.changeY = -10;
-//     //displays[0]->fillRect(100, 100, 100, 20, ILI9341_BLACK);
-//     move();
-// }
-
-// void Snake::moveRight()
-// {
-//     snake.changeX = 10; //changes the direction of the snake
-//     snake.changeY = 0;
-//     move();
-//     //displays[0]->fillRect(100, 100, 100, 20, ILI9341_BLACK);
-// }
-
-// void Snake::moveLeft()
-// {
-//     snake.changeX = -10; //changes the direction of the snake
-//     snake.changeY = 0;
-//     move();
-//     //displays[0]->fillRect(100, 100, 100, 20, ILI9341_BLACK);
-// }
 void Snake::printScore()
 {
 

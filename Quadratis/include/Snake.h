@@ -29,13 +29,13 @@ class Snake : public Game
   };
 
 public:
-  Snake(Display *display);
+  Snake(Communication* comm, Display_Master *display);
   ~Snake();
   Info getInfo() override;
   void run() override;
 
 private:
-  Display *displays;
+  Display_Master *displays;
   int currentDisplay = 0;
   int borderX = 10;
   int borderY = 40;
@@ -46,6 +46,7 @@ private:
   food food;
   snake snake;
   Adafruit_ILI9341 *temp[1];
+  Communication* comm;
 
   void moveUp();
   void moveDown();

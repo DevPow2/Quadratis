@@ -2,7 +2,8 @@
 #define Game_H
 
 #include <App.h>
-#include "Display.h"
+#include "Display_Master.h"
+#include "Communication.h"
 // #include "Snake.h"
 // #include "FlappyBird.h"
 #include <Arduino.h>

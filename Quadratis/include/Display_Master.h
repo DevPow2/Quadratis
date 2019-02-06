@@ -1,5 +1,5 @@
-#ifndef Display_H
-#define Display_H
+#ifndef Display_Master_H
+#define Display_Master_H
 
 #include <Arduino.h>
 #include "App.h"
@@ -9,8 +9,7 @@
 #include "XPT2046_Touchscreen.h"
 #include <SD.h>
 
-#define AMOUNT_DISPLAYS 1
-#define AMOUNT_TOUCH 1
+#define AMOUNT_DISPLAYS 4
 #define SCREEN_X_SIZE 320
 #define SCREEN_Y_SIZE 240
 
@@ -25,15 +24,13 @@
 #define AMOUNT_OF_SPI 5 //remove when everything is done
 #define SPI_FREQUENCY ((MAX_SPI_FREQUENCY / AMOUNT_OF_SPI) - 2000000)
 
-
-
 struct Coordinates
 {
   int x;
   int y;
 };
 
-class Display
+class Display_Master
 {
   enum Direction{
     A,
@@ -49,10 +46,8 @@ class Display
   };
 
 public:
-  Display();
-  ~Display();
-  int touched();
-  
+  Display_Master();
+  ~Display_Master();  
   void drawPixel(int x, int y, int color);
   int getCurrentDisplay();
   void update();
@@ -68,20 +63,13 @@ public:
   void setTextSize(int size);
   int checkCollision(int* x, int* y, int *changeX, int *changeY);
   int getNextScreen();
-  void bmpDraw(int display, Image image, int x, int y);
-  Coordinates getTouch(int display);
+  // void bmpDraw(int display, Image image, int x, int y);
 
 private:
   displayLocation displaylocation;
   displayLocation screenIndex[12][2] = { {{0,A},{3,A}}, {{0,B},{2,A}}, {{0,C},{1,A}}, {{0,D},{4,A}}, {{1,B},{2,D}}, {{1,C},{5,A}}, {{1,D},{4,B}}, {{2,B},{3,D}}, {{2,C},{5,B}}, {{3,B},{4,D}}, {{3,C},{5,C}}, {{4,C},{5,D}} };
   Adafruit_ILI9341 *displayArr[AMOUNT_DISPLAYS] = {0}; //240 x 320
-  XPT2046_Touchscreen *touchArr[AMOUNT_TOUCH] = {0};
 
-
-
-  
-  uint16_t read16(File &f);
-  uint32_t read32(File &f);
 };
 
 #endif

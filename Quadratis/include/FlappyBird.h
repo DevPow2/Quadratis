@@ -3,11 +3,12 @@
 
 #include <Arduino.h>
 #include "Game.h"
+// #include "Image_flappyBird.h"
 
 class FlappyBird : public Game
 {
   public:
-    FlappyBird(Display *display);
+    FlappyBird(Display_Master *display);
     ~FlappyBird();
     Info getInfo() override;
     void run() override;
