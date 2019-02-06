@@ -73,6 +73,10 @@ void menu() {
 void costumize() {
   section = 2;
   tft.fillScreen(ILI9341_BLACK);
+  tft.setCursor(10,10);
+  tft.setTextColor(ILI9341_WHITE);  
+  tft.setTextSize(1);
+  tft.println("Back");
   setTitleTFT(2.5, "Customize", 1);
   setTextTFT(2.5, "Achtergrond", 2);
   setTextTFT(2.5, "Knoppen", 3);
@@ -82,6 +86,10 @@ void costumize() {
 void options() {
   section = 1;
   tft.fillScreen(ILI9341_BLACK);
+  tft.setCursor(10,10);
+  tft.setTextColor(ILI9341_WHITE);  
+  tft.setTextSize(1);
+  tft.println("Back");
   setTitleTFT(2, "Opties", 1);
   setTextTFT(2, "Netwerk", 2);
   setTextTFT(2, "Customize", 3);
@@ -114,7 +122,8 @@ void setTitleTFT(int fontSize, String text, int yOffset) {
   y = (fontSize * 8 + space) * yOffset + 22;
 
   tft.setCursor(x, y);
-  tft.setTextColor(ILI9341_WHITE);  tft.setTextSize(fontSize);
+  tft.setTextColor(ILI9341_WHITE);  
+  tft.setTextSize(fontSize);
   tft.println(text);
 
 
@@ -137,6 +146,10 @@ void getTouch() {
 
     if (p.x >= 116 && p.x <= 238 && p.y >= 128 && p.y <= 142 && section == 1) {
       costumize();
+    }
+
+    if (p.x >= 0 && p.x <= 50 && p.y >= 0 && p.y <= 50 && (section == 1 || section == 2)) {
+      menu();
     }
 
     Serial.print("X: ");
