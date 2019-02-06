@@ -19,7 +19,6 @@ public:
 
   static Communication *getInstance();
 
-  static String split(String data, char separator, int index);
   String readSerial();
   void writeSerial(String message);
 };

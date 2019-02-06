@@ -37,6 +37,7 @@ void setup()
     }
 
     comm = Communication::getInstance();
+    comm->writeSerial("Play song,");
     
     display = new Display_Master();
     
@@ -50,7 +51,7 @@ void setup()
     // game->addGame(0,  new Snake(comm, display));
    // game->addGame(1,  new FlappyBird(display));
     xTaskCreatePinnedToCore(core0Loop, "Workload0", 10000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
-    xTaskCreatePinnedToCore(core1Loop, "Workload1", 10000, NULL, 1, &TaskB, 1);
+    // xTaskCreatePinnedToCore(core1Loop, "Workload1", 1000, NULL, 1, &TaskB, 1);
 }
 
 void loop() {} //Dont use this
@@ -61,6 +62,7 @@ void core0Loop(void *parameter)
     while (true)
     {
         // // Serial.println("1");
+        comm->writeSerial(",");
         String message = comm->readSerial();
         if (strstr(message.c_str(), "Schudden"))
         {
@@ -78,26 +80,26 @@ void core0Loop(void *parameter)
             game->getCurrentGame()->run();
         }
         ota.handleOTA();
-        vTaskDelay(10);
-    }
-}
-
-void core1Loop(void *parameter)
-{
-    while (true)
-    {
-        String message = comm->readSerial();
-        // Serial.print(".");
-        /*if(message != "")
-        
-        { 
-            Serial.println("message received:");
-            comm->writeSerial(",");
-            Serial.println(message);
-            Serial.println("master");
-        }*/
         vTaskDelay(50);
     }
 }
+
+// void core1Loop(void *parameter)
+// {
+//     while (true)
+//     {
+//         String message = comm->readSerial();
+//         // Serial.print(".");
+//         /*if(message != "")
+        
+//         { 
+//             Serial.println("message received:");
+//             comm->writeSerial(",");
+//             Serial.println(message);
+//             Serial.println("master");
+//         }*/
+//         vTaskDelay(50);
+//     }
+// }
 
 #endif

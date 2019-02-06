@@ -9,7 +9,7 @@
 #include "XPT2046_Touchscreen.h"
 #include <SD.h>
 
-#define AMOUNT_DISPLAYS 4
+#define AMOUNT_DISPLAYS 5
 #define SCREEN_X_SIZE 320
 #define SCREEN_Y_SIZE 240
 

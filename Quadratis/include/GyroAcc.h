@@ -12,7 +12,7 @@
 #endif
 
 #define NOISE 1000
-#define TRESHOLDVALUE 25000
+#define TRESHOLDVALUE 22000
 #define DEPTH 10
 #define AXES 3
 #define X 0
@@ -56,8 +56,8 @@ private:
   unsigned long getDal(int16_t x);
   unsigned long getTop(int16_t x);
 
-  int prevScreen = -1;
-
+  int prevScreen = 2;
+  
   int getScreenOff(int16_t x, int16_t y, int16_t z);
   
 };

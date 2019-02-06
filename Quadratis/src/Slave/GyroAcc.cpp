@@ -12,18 +12,19 @@ GyroAcc::GyroAcc()
 
   // verify connection
   Serial.println("Testing device connections...");
-  
+  // delay(3000);
+  Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
 
-  if (accelgyro.testConnection())
-  {
-    Serial.println("MPU6050 connection successful");
-  }
-  else
-  {
-    Serial.println("MPU6050 connection failed, restarting.....");
-    vTaskDelay(1000);
-    ESP.restart();
-  }
+  // if (accelgyro.testConnection())
+  // {
+  //   Serial.println("MPU6050 connection successful");
+  // }
+  // else
+  // {
+  //   Serial.println("MPU6050 connection failed, restarting.....");
+  //   vTaskDelay(1000);
+  //   ESP.restart();
+  // }
 }
 
 GyroAcc::~GyroAcc()
@@ -46,7 +47,9 @@ int GyroAcc::getDirection()
   z = RAD_TO_DEG * (atan2(-yAng, -xAng) + 3.14159265358979323846);
 
   int screenOff = getScreenOff(x,y,z);
+  // Serial.println(screenOff);
   int direction = getControls(prevScreen, screenOff);
+  // Serial.println(direction);
   prevScreen = screenOff;
   return direction;
 
@@ -172,37 +175,41 @@ int GyroAcc::getControls(int prevScreen, int screenOff) {
       return 4;
     }
   }
-  return -1;
 }
 int GyroAcc::getScreenOff(int16_t x, int16_t y, int16_t z)
 {
+  // Serial.print(x);
+  // Serial.print("-----------");
+  // Serial.print(y);
+  // Serial.print("-----------");
+  // Serial.println(z);
  if ((y >= 45 && y <= 135) && (x >= 90) && (z >= 315 || z <= 45)) {
-    screenOff = 2;
+    return 2;
   }
 
   // Kantel naar voren
   if ((x >= 135 && x <= 225) && (y >= 135 && y <= 225) ) {
-    screenOff = 5;
+    return 5;
   }
 
   // Onderste Boven
   if ((x >= 180 && x <= 270) && (y >= 225 && y <= 315) && (z >= 135 && z <= 225)) {
-    screenOff = 4;
+    return 4;
   }
 
   // Kanel naar voren
   if ((x >= 315 || x <= 45 ) && (y >= 315 || y <= 45) && (z >= 180 && z <= 270)) {
-    screenOff = 3;
+    return 3;
   }
 
   // Kantel naar links
   if ((x >= 225 && x <= 315) && (y >= 180 && y <= 270) && (z >= 225 && z <= 315)) {
-    screenOff = 1;
+    return 1;
   }
 
   // Kantel naar rechts
   if ((x >= 45 && x <= 135) && (y >= 180 && y <= 270) && (z <= 135 && z >= 45)) {
-    screenOff = 6;
+    return 6;
   }
 }
 
@@ -323,6 +330,7 @@ unsigned long GyroAcc::getTop(int16_t x)
 void GyroAcc::getAcceleration(int16_t accData[3])
 {
   accelgyro.getAcceleration(&accData[0], &accData[1], &accData[2]);
+  // Serial.println(accData[0]);
 }
 
 void GyroAcc::getGyro(int16_t gyroData[3])

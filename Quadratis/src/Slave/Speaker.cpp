@@ -40,7 +40,7 @@ void Speaker::playSong(int fileNumber)
     break;
 
   default: //todo
-    myDFPlayer->play(1);
+    myDFPlayer->play(0);
     break;
   }
 }

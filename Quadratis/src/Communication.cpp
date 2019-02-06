@@ -3,7 +3,7 @@
 Communication::Communication()
 {
     Serial2.begin(9600, SERIAL_8N1, TX_COMMUNICATION, RX_COMMUNICATION); //Hardware serial
-    Serial2.setTimeout(100);
+    // Serial2.setTimeout(100);
 }
 
 Communication::~Communication()
@@ -30,6 +30,8 @@ String Communication::readSerial()
         //char terminator = ',';
         String data = Serial2.readStringUntil((char)',');
         data.trim();
+        Serial.print("Incoming data : ");
+        Serial.println(data);
         return data;
     }
     return "";
@@ -46,22 +48,4 @@ void Communication::writeSerial(String message)
         Serial2.println(message);
     }
     
-}
-
-String Communication::split(String data, char separator, int index)
-{
-    int found = 0;
-    int strIndex[] = {0, -1};
-    int maxIndex = data.length() - 1;
-
-    for (int i = 0; i <= maxIndex && found <= index; i++)
-    {
-        if (data.charAt(i) == separator || i == maxIndex)
-        {
-            found++;
-            strIndex[0] = strIndex[1] + 1;
-            strIndex[1] = (i == maxIndex) ? i + 1 : i;
-        }
-    }
-    return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
 }

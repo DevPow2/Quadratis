@@ -7,12 +7,12 @@ Display_Master::Display_Master() // initialize all displays
     displaylocation.displayNumber = 0;
     Serial.println("Setting up displays");
     
-    // displayArr[0] = new Adafruit_ILI9341(27, 5);
+    displayArr[0] = new Adafruit_ILI9341(27, 5);
     // displayArr[1] = new Adafruit_ILI9341(25, 5); --> different ESP
-    displayArr[0] = new Adafruit_ILI9341(2, 5);
-    displayArr[1] = new Adafruit_ILI9341(22, 5);
-    displayArr[2] = new Adafruit_ILI9341(32, 5);
-    displayArr[3] = new Adafruit_ILI9341(4, 5);
+    displayArr[1] = new Adafruit_ILI9341(2, 5);
+    displayArr[2] = new Adafruit_ILI9341(22, 5);
+    displayArr[3] = new Adafruit_ILI9341(32, 5);
+    displayArr[4] = new Adafruit_ILI9341(4, 5);
    
     for (int i = 0; i < AMOUNT_DISPLAYS; i++)
     {
@@ -30,7 +30,7 @@ Display_Master::Display_Master() // initialize all displays
     yield();
     displayArr[3]->fillScreen(ILI9341_YELLOW);
     yield();
-    // displayArr[4]->fillScreen(ILI9341_RED);
+    displayArr[4]->fillScreen(ILI9341_RED);
     yield();
     // displayArr[5]->fillScreen(ILI9341_BLUE);
     // /*initialize touchscreens */
