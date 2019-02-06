@@ -17,57 +17,62 @@
 #include "SPI.h"
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
+#include "XPT2046_Touchscreen.h"
 
-//Font
-#include <Fonts/Org_01.h>
+// This is calibration data for the raw touch data to the screen coordinates
+#define TS_MINX 150
+#define TS_MINY 130
+#define TS_MAXX 3800
+#define TS_MAXY 4000
 
 // For the ESP8266, these are the default.
 #define TFT_DC 2
 #define TFT_CS 15
 
 bool updated = false;
+uint16_t touchX, touchY;
+int section;
 
 // Use hardware SPI (on Uno, #13, #12, #11) and the above for CS/DC
 Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
-// If using the breakout, change pins as desired
-//Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC, TFT_MOSI, TFT_CLK, TFT_RST, TFT_MISO);
+XPT2046_Touchscreen touch(/*cs=*/ 4, /*irq=*/ 5);
+
+
 
 void setup() {
   Serial.begin(9600);
   Serial.println("ILI9341 Test!");
 
   tft.begin();
+  touch.begin();
   tft.setRotation(3);
   tft.fillScreen(ILI9341_BLACK);
+
   //  tft.setFont(&Org_01);
   updated = true;
+  menu();
 
 }
 
 
 void loop(void) {
-  if (updated) {
-    updated = false;
-    costumize();
-  }
-  for (uint8_t rotation = 0; rotation < 4; rotation++) {
-    //    tft.setRotation(rotation);
-    //    testText();
-
-    delay(1000);
-  }
+  getTouch();
 }
 
 
 
 void menu() {
-  setTextTFT(3, "Opties", 1);
-  setTextTFT(3, "Media", 2);
-  setTextTFT(3, "Games", 3);
-  setTextTFT(3, "Developer", 4);
+  section = 0;
+  tft.fillScreen(ILI9341_BLACK);
+  setTextTFT(2, "Opties", 1);
+  setTextTFT(2, "Media", 2);
+  setTextTFT(2, "Games", 3);
+  setTextTFT(2, "Developer", 4);
 }
 
 void costumize() {
+  section = 2;
+  tft.fillScreen(ILI9341_BLACK);
   setTitleTFT(2.5, "Customize", 1);
   setTextTFT(2.5, "Achtergrond", 2);
   setTextTFT(2.5, "Knoppen", 3);
@@ -75,6 +80,8 @@ void costumize() {
 }
 
 void options() {
+  section = 1;
+  tft.fillScreen(ILI9341_BLACK);
   setTitleTFT(2, "Opties", 1);
   setTextTFT(2, "Netwerk", 2);
   setTextTFT(2, "Customize", 3);
@@ -89,7 +96,7 @@ void setTextTFT(int fontSize, String text, int yOffset) {
   space = 20;
   x = cx - ((fontSize * 6) * text.length() / 2);
   y = (fontSize * 8 + space) * yOffset + 22;
-  
+
   setTitleTFT(fontSize, text, yOffset);
   tft.drawRoundRect(x - 10, y - 5, (6 * text.length() * fontSize) + 20, (8 * fontSize) + 9, 5, 0xFFFF  );
 
@@ -115,9 +122,28 @@ void setTitleTFT(int fontSize, String text, int yOffset) {
 
 }
 
-//int16_t textWidth(const String& string) {
-//  int16_t len = string.length() + 2;
-//  char buffer[len];
-//  string.toCharArray(buffer, len);
-//  return textWidth(buffer);
-//}
+void getTouch() {
+  if (touch.touched()) {
+
+    // Retrieve a point
+    TS_Point p = touch.getPoint();
+    // Scale from ~0->4000 to tft.width using the calibration #'s
+    p.x = map(p.x, TS_MINX, TS_MAXX, 0, tft.width());
+    p.y = map(p.y, TS_MINY, TS_MAXY, 0, tft.height());
+
+    if (p.x >= 135 && p.x <= 221 && p.y >= 56 && p.y <= 70 && section == 0) {
+      options();
+    }
+
+    if (p.x >= 116 && p.x <= 238 && p.y >= 128 && p.y <= 142 && section == 1) {
+      costumize();
+    }
+
+    Serial.print("X: ");
+    Serial.print(p.x);
+    Serial.print(" ");
+    Serial.print("Y: ");
+    Serial.println(p.y);
+  }
+
+}
