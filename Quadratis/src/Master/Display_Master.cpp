@@ -1,49 +1,39 @@
 #include "Display_Master.h"
-
+// This is calibration data for the raw touch data to the screen coordinates
+#define TS_MINX 150
+#define TS_MINY 130
+#define TS_MAXX 3800
+#define TS_MAXY 4000
 Display_Master::Display_Master() // initialize all displays
 {
 
     /*initialize displays */
     displaylocation.displayNumber = 0;
     Serial.println("Setting up displays");
-    
+
     displayArr[0] = new Adafruit_ILI9341(27, 5);
-    // displayArr[1] = new Adafruit_ILI9341(25, 5); --> different ESP
     displayArr[1] = new Adafruit_ILI9341(2, 5);
     displayArr[2] = new Adafruit_ILI9341(22, 5);
     displayArr[3] = new Adafruit_ILI9341(32, 5);
     displayArr[4] = new Adafruit_ILI9341(4, 5);
-   
+
     for (int i = 0; i < AMOUNT_DISPLAYS; i++)
     {
-        displayArr[i]->begin(10000000);
-        yield();
+        displayArr[i]->begin();
+        delay(10);
     }
 
     displayArr[0]->fillScreen(ILI9341_GREEN);
-    yield();
-
-    displayArr[1]->fillScreen(ILI9341_RED);
-    yield();
-
-    displayArr[2]->fillScreen(ILI9341_GREEN);
-    yield();
+    delay(5000);
+    displayArr[1]->fillScreen(ILI9341_PINK);
+    delay(5000);
+    displayArr[2]->fillScreen(ILI9341_CYAN);
+    delay(5000);
     displayArr[3]->fillScreen(ILI9341_YELLOW);
-    yield();
+    delay(5000);
     displayArr[4]->fillScreen(ILI9341_RED);
-    yield();
-    // displayArr[5]->fillScreen(ILI9341_BLUE);
-    // /*initialize touchscreens */
-    // touchArr[0] = new XPT2046_Touchscreen(26);
-    // for (int i = 0; i < AMOUNT_TOUCH; i++)
-    // {
-    //     touchArr[i]->begin();
-    // }
+    delay(5000);
 
-    // if (!SD.begin(14))
-    // {
-    //     Serial.println("failed!");
-    // }
     Serial.println("OK!");
 }
 
@@ -208,8 +198,3 @@ int Display_Master::getNextScreen()
     }
     return -1;
 }
-
-// void Display_Master::bmpDraw(int display, Image image, int x, int y)
-// {
-//     displayArr[0]->drawRGBBitmap(0, 0, (uint16_t *)image.pixel_data, image.width, image.height);
-// }
