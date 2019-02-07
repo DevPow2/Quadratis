@@ -5,31 +5,14 @@ Display_Slave::Display_Slave()
 {
     Serial.println("Setting up display");
 
-<<<<<<< HEAD
-    /*initialize displays */
-    displaylocation.displayNumber = 0;
-    Serial.println("Setting up displays");
-    
-    displayArr[0] = new Adafruit_ILI9341(26, 5);
-   
-    for (int i = 0; i < AMOUNT_DISPLAYS; i++)
-    {
-        displayArr[i]->begin(10000000);
-    }
-
-    displayArr[0]->fillScreen(ILI9341_GREEN);
-    yield();
-=======
     display = new Adafruit_ILI9341(25, 5);
     display->begin();
     delay(10);
-    display->setRotation(1);
+    display->setRotation(3);
     drawLogo();
->>>>>>> f687a50b624b305582c4b41d63d8ac2316874fbc
-
     touchscreen = new XPT2046_Touchscreen(26); //todo
     touchscreen->begin();
-
+    comm->getInstance();
     Serial.println("OK!");
 }
 
@@ -46,7 +29,7 @@ void Display_Slave::drawLogo()
 void Display_Slave::menu()
 {
     section = 0;
-    //   tft.fillScreen(ILI9341_BLACK);
+    display->fillScreen(ILI9341_BLACK);
     setTextTFT(2, "Opties", 1);
     setTextTFT(2, "Media", 2);
     setTextTFT(2, "Games", 3);
@@ -93,7 +76,14 @@ void Display_Slave::getTouch()
 {
     if (touchscreen->touched())
     {
-
+        if(logo)
+        {
+            logo = false;
+            menu();
+            comm->writeSerial("Play,");
+            return;
+        }
+        Serial.println(logo);
         // Retrieve a point
         TS_Point p = touchscreen->getPoint();
        

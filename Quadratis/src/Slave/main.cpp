@@ -30,26 +30,6 @@ int direction = 5;
 void setup()
 {
     Serial.begin(9600); //Debug serial
-<<<<<<< HEAD
-    wifiMulti.addAP(SSID1, PASS1);
-
-    if (wifiMulti.run() == WL_CONNECTED)
-    {
-        Serial.println("");
-        Serial.println("WiFi connected");
-        Serial.println("IP address: ");
-        Serial.println(WiFi.localIP());
-    }
-
-    comm = Communication::getInstance();
-    display_Slave = new Display_Slave();
-    gyroAcc = new GyroAcc();
-    speaker = new Speaker();
-    speaker->setVolume(30);
-speaker->playSong(1);
-    xTaskCreatePinnedToCore(core0Loop, "Workload1", 10000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
-    // xTaskCreatePinnedToCore(core1Loop, "Workload2", 5000, NULL, 1, &TaskB, 1);
-=======
     // wifiMulti.addAP(SSID1, PASS1);
 
     // if (wifiMulti.run() == WL_CONNECTED)
@@ -66,9 +46,8 @@ speaker->playSong(1);
     // gyroAcc = new GyroAcc();
     // speaker = new Speaker();
     // speaker->setVolume(30);
-    xTaskCreatePinnedToCore(core0Loop, "Workload1", 5000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
+    xTaskCreatePinnedToCore(core0Loop, "Workload1", 50000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
     xTaskCreatePinnedToCore(core1Loop, "Workload2", 5000, NULL, 1, &TaskB, 1);
->>>>>>> f687a50b624b305582c4b41d63d8ac2316874fbc
 }
 
 void loop() {}
@@ -78,34 +57,6 @@ void core0Loop(void *parameter)
     // Ota ota;
     while (true)
     {
-<<<<<<< HEAD
-        comm->writeSerial(",");
-        String message = comm->readSerial();
-        // if (message != "")
-        // {
-            Serial.println(message);
-        // }
-        if (strstr(message.c_str(), "Play song"))
-        {
-            speaker->playSong(1);
-            // comm->writeSerial("Command recieved,");
-        }
-        if (gyroAcc->getShaking())
-        {
-            Serial.println("er zou nu een bericht worden gestuurd");
-            comm->writeSerial("Schudden,");
-        }
-
-        int currentDirection = gyroAcc->getDirection();
-
-        if (currentDirection != direction)
-        {
-            comm->writeSerial("testets,");
-            Serial.print("current direction : ");
-            Serial.println(currentDirection);
-            direction = currentDirection;
-        }
-=======
         // if (display_Slave->touched() == 1)
         // {
         //     Serial.println("tocuhed");
@@ -113,8 +64,8 @@ void core0Loop(void *parameter)
         // }
 
          display_Slave->getTouch();
-        // comm->writeSerial(",");
-        // String message = comm->readSerial();
+        comm->writeSerial(",");
+        String message = comm->readSerial();
         // if (message != "")
         // {
         //     Serial.println(message);
@@ -123,7 +74,6 @@ void core0Loop(void *parameter)
         // {
         //     speaker->playSong(1);
         //     // comm->writeSerial("Command recieved,");
->>>>>>> f687a50b624b305582c4b41d63d8ac2316874fbc
         // }
         // if (gyroAcc->getShaking())
         // {
@@ -131,10 +81,6 @@ void core0Loop(void *parameter)
         //     comm->writeSerial("Schudden,");
         // }
 
-<<<<<<< HEAD
-        ota.handleOTA();
-        vTaskDelay(500);
-=======
         // int currentDirection = gyroAcc->getDirection();
 
         // if (currentDirection != direction)
@@ -153,7 +99,6 @@ void core0Loop(void *parameter)
 
         // ota.handleOTA();
         vTaskDelay(50);
->>>>>>> f687a50b624b305582c4b41d63d8ac2316874fbc
     }
 }
 

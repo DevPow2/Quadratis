@@ -10,72 +10,30 @@ Display_Master::Display_Master() // initialize all displays
     /*initialize displays */
     displaylocation.displayNumber = 0;
     Serial.println("Setting up displays");
-<<<<<<< HEAD
-    
-    displayArr[0] = new Adafruit_ILI9341(22, 5);
-    // 
-    // // displayArr[1] = new Adafruit_ILI9341(25, 5); --> different ESP
-    displayArr[1] = new Adafruit_ILI9341(32, 5);
-    // displayArr[1]->begin(1000000);
-    displayArr[2] = new Adafruit_ILI9341(4, 5);
-    // displayArr[2]->begin(1000000);
-    displayArr[3] = new Adafruit_ILI9341(2, 5);
-    // displayArr[3]->begin(1000000);
-    displayArr[4] = new Adafruit_ILI9341(27, 5);
-    // displayArr[4]->begin(1000000);
-   
-    for (int i = 0; i < AMOUNT_DISPLAYS; i++)
-    {
-        displayArr[i]->begin(1000000);
-        displayArr[i]->setRotation(1);
-        displayArr[i]->print(i);
-        Serial.println(i);
-    }
-    // yield();
-    displayArr[0]->fillScreen(ILI9341_BLACK);
-    // yield();
-
-    displayArr[1]->fillScreen(ILI9341_BLACK);
-    // yield();
-
-    displayArr[2]->fillScreen(ILI9341_BLACK);
-    // yield();
-    displayArr[3]->fillScreen(ILI9341_BLACK);
-    // // yield();
-    // displayArr[4]->fillScreen(ILI9341_BLACK);
-    // yield();
-    // displayArr[5]->fillScreen(ILI9341_BLUE);
-    // /*initialize touchscreens */
-    // touchArr[0] = new XPT2046_Touchscreen(26);
-    // for (int i = 0; i < AMOUNT_TOUCH; i++)
-    // {
-    //     touchArr[i]->begin();
-    // }
-=======
 
     displayArr[0] = new Adafruit_ILI9341(27, 5);
-    displayArr[1] = new Adafruit_ILI9341(2, 5);
-    displayArr[2] = new Adafruit_ILI9341(22, 5);
+    displayArr[1] = new Adafruit_ILI9341(22, 5);
+    displayArr[2] = new Adafruit_ILI9341(2, 5);
     displayArr[3] = new Adafruit_ILI9341(32, 5);
     displayArr[4] = new Adafruit_ILI9341(4, 5);
-
+    int j = 0;
     for (int i = 0; i < AMOUNT_DISPLAYS; i++)
     {
-        displayArr[i]->begin();
+        displayArr[i]->begin(10000000);
+        displayArr[i]->setRotation(i);
         delay(10);
     }
 
-    displayArr[0]->fillScreen(ILI9341_GREEN);
-    delay(5000);
-    displayArr[1]->fillScreen(ILI9341_PINK);
-    delay(5000);
+    displayArr[0]->fillScreen(ILI9341_CYAN);
+    delay(200);
+    displayArr[1]->fillScreen(ILI9341_CYAN);
+    delay(200);
     displayArr[2]->fillScreen(ILI9341_CYAN);
-    delay(5000);
-    displayArr[3]->fillScreen(ILI9341_YELLOW);
-    delay(5000);
-    displayArr[4]->fillScreen(ILI9341_RED);
-    delay(5000);
->>>>>>> f687a50b624b305582c4b41d63d8ac2316874fbc
+    delay(200);
+    displayArr[3]->fillScreen(ILI9341_CYAN);
+    delay(200);
+    displayArr[4]->fillScreen(ILI9341_CYAN);
+    delay(200);
 
     Serial.println("OK!");
 }
@@ -220,24 +178,38 @@ int Display_Master::checkCollision(int *x, int *y, int *changeX, int *changeY)
     return false;
 }
 
+// int Display_Master::getNextScreen()
+// {
+//     for (int i = 0; i < 12; i++)
+//     { // rows
+//         for (int j = 0; j < 2; j++)
+//         { // columns
+//             if (screenIndex[i][j].direction == displaylocation.direction && screenIndex[i][j].displayNumber == displaylocation.displayNumber)
+//             {
+//                 Serial.println();
+//                 Serial.println(screenIndex[i][j].displayNumber);
+//                 Serial.println(screenIndex[i][j].direction);
+//                 Serial.println(displaylocation.displayNumber);
+//                 Serial.println(displaylocation.direction);
+//                 Serial.println(screenIndex[i][abs(j - 1)].displayNumber);
+//                 Serial.println("-----------------------------------");
+//                 return screenIndex[i][abs(j - 1)].displayNumber; // will return an 1 when 0 or 0 when 1
+//             }
+//         }
+//     }
+//     return -1;
+// }
+
 int Display_Master::getNextScreen()
 {
-    for (int i = 0; i < 12; i++)
-    { // rows
-        for (int j = 0; j < 2; j++)
-        { // columns
-            if (screenIndex[i][j].direction == displaylocation.direction && screenIndex[i][j].displayNumber == displaylocation.displayNumber)
-            {
-                Serial.println();
-                Serial.println(screenIndex[i][j].displayNumber);
-                Serial.println(screenIndex[i][j].direction);
-                Serial.println(displaylocation.displayNumber);
-                Serial.println(displaylocation.direction);
-                Serial.println(screenIndex[i][abs(j - 1)].displayNumber);
-                Serial.println("-----------------------------------");
-                return screenIndex[i][abs(j - 1)].displayNumber; // will return an 1 when 0 or 0 when 1
-            }
-        }
+    displaylocation.displayNumber += 1;
+    if(lastscreen == 2 && displaylocation.displayNumber == 3)
+    {
+        displaylocation.displayNumber = 2;
     }
-    return -1;
+    if(displaylocation.displayNumber > 4) displaylocation.displayNumber = 0;
+    
+    lastscreen = displaylocation.displayNumber;
+    return displaylocation.displayNumber;
 }
+

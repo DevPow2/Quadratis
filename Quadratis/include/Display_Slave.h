@@ -7,6 +7,7 @@
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
 #include "XPT2046_Touchscreen.h"
+#include "Communication.h"
 #include <SD.h>
 
 #define SCREEN_X_SIZE 320
@@ -43,6 +44,8 @@ public:
 private:
   Adafruit_ILI9341 *display;
   XPT2046_Touchscreen *touchscreen;
+  boolean logo = true;
+  Communication* comm;
 };
 
 #endif
