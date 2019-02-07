@@ -7,12 +7,11 @@ Display_Slave::Display_Slave() // initialize all displays
     displaylocation.displayNumber = 0;
     Serial.println("Setting up displays");
     
-    displayArr[0] = new Adafruit_ILI9341(32, 5);
+    displayArr[0] = new Adafruit_ILI9341(26, 5);
    
     for (int i = 0; i < AMOUNT_DISPLAYS; i++)
     {
-        displayArr[i]->begin();
-        yield();
+        displayArr[i]->begin(10000000);
     }
 
     displayArr[0]->fillScreen(ILI9341_GREEN);

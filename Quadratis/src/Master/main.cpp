@@ -50,7 +50,7 @@ void setup()
     // delay(10000);
     // game->addGame(0,  new Snake(comm, display));
    // game->addGame(1,  new FlappyBird(display));
-    xTaskCreatePinnedToCore(core0Loop, "Workload0", 10000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
+    xTaskCreatePinnedToCore(core0Loop, "Workload0", 100000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
     // xTaskCreatePinnedToCore(core1Loop, "Workload1", 1000, NULL, 1, &TaskB, 1);
 }
 
@@ -59,28 +59,30 @@ void loop() {} //Dont use this
 void core0Loop(void *parameter)
 {
     Ota ota;
+   Snake *snake = new Snake(comm, display);
     while (true)
     {
+       snake->run();
         // // Serial.println("1");
-        comm->writeSerial(",");
-        String message = comm->readSerial();
-        if (strstr(message.c_str(), "Schudden"))
-        {
-            playingGame = false;
-            game = NULL;
-        }
+        // comm->writeSerial(",");
+        // String message = comm->readSerial();
+        // if (strstr(message.c_str(), "Schudden"))
+        // {
+        //     playingGame = false;
+        //     game = NULL;
+        // }
 
-        if (strstr(message.c_str(), "Play"))
-        {
-            game->setCurrentGame(0);
-            playingGame = true;
-        }
-        if (playingGame)
-        {
-            game->getCurrentGame()->run();
-        }
+        // if (strstr(message.c_str(), "Play"))
+        // {
+        //     game->setCurrentGame(0);
+        //     playingGame = true;
+        // }
+        // if (playingGame)
+        // {
+        //     game->getCurrentGame()->run();
+        // }
         ota.handleOTA();
-        vTaskDelay(50);
+        vTaskDelay(250);
     }
 }
 

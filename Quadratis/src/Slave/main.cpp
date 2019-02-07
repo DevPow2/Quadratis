@@ -41,11 +41,12 @@ void setup()
     }
 
     comm = Communication::getInstance();
-    // display_Slave = new Display_Slave();
+    display_Slave = new Display_Slave();
     gyroAcc = new GyroAcc();
     speaker = new Speaker();
     speaker->setVolume(30);
-    xTaskCreatePinnedToCore(core0Loop, "Workload1", 5000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
+speaker->playSong(1);
+    xTaskCreatePinnedToCore(core0Loop, "Workload1", 10000, NULL, 1, &TaskA, 0); //TaskCode, pcName, usStackDepth, uxPriority, pxCreatedTask, xCoreID
     // xTaskCreatePinnedToCore(core1Loop, "Workload2", 5000, NULL, 1, &TaskB, 1);
 }
 
@@ -60,10 +61,10 @@ void core0Loop(void *parameter)
     {
         comm->writeSerial(",");
         String message = comm->readSerial();
-        if (message != "")
-        {
+        // if (message != "")
+        // {
             Serial.println(message);
-        }
+        // }
         if (strstr(message.c_str(), "Play song"))
         {
             speaker->playSong(1);
@@ -92,7 +93,7 @@ void core0Loop(void *parameter)
         // }
 
         ota.handleOTA();
-        vTaskDelay(50);
+        vTaskDelay(500);
     }
 } //Dont use this
 

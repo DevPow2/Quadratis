@@ -7,31 +7,38 @@ Display_Master::Display_Master() // initialize all displays
     displaylocation.displayNumber = 0;
     Serial.println("Setting up displays");
     
-    displayArr[0] = new Adafruit_ILI9341(27, 5);
-    // displayArr[1] = new Adafruit_ILI9341(25, 5); --> different ESP
-    displayArr[1] = new Adafruit_ILI9341(2, 5);
-    displayArr[2] = new Adafruit_ILI9341(22, 5);
-    displayArr[3] = new Adafruit_ILI9341(32, 5);
-    displayArr[4] = new Adafruit_ILI9341(4, 5);
+    displayArr[0] = new Adafruit_ILI9341(22, 5);
+    // 
+    // // displayArr[1] = new Adafruit_ILI9341(25, 5); --> different ESP
+    displayArr[1] = new Adafruit_ILI9341(32, 5);
+    // displayArr[1]->begin(1000000);
+    displayArr[2] = new Adafruit_ILI9341(4, 5);
+    // displayArr[2]->begin(1000000);
+    displayArr[3] = new Adafruit_ILI9341(2, 5);
+    // displayArr[3]->begin(1000000);
+    displayArr[4] = new Adafruit_ILI9341(27, 5);
+    // displayArr[4]->begin(1000000);
    
     for (int i = 0; i < AMOUNT_DISPLAYS; i++)
     {
-        displayArr[i]->begin(10000000);
-        yield();
+        displayArr[i]->begin(1000000);
+        displayArr[i]->setRotation(1);
+        displayArr[i]->print(i);
+        Serial.println(i);
     }
+    // yield();
+    displayArr[0]->fillScreen(ILI9341_BLACK);
+    // yield();
 
-    displayArr[0]->fillScreen(ILI9341_GREEN);
-    yield();
+    displayArr[1]->fillScreen(ILI9341_BLACK);
+    // yield();
 
-    displayArr[1]->fillScreen(ILI9341_RED);
-    yield();
-
-    displayArr[2]->fillScreen(ILI9341_GREEN);
-    yield();
-    displayArr[3]->fillScreen(ILI9341_YELLOW);
-    yield();
-    displayArr[4]->fillScreen(ILI9341_RED);
-    yield();
+    displayArr[2]->fillScreen(ILI9341_BLACK);
+    // yield();
+    displayArr[3]->fillScreen(ILI9341_BLACK);
+    // // yield();
+    // displayArr[4]->fillScreen(ILI9341_BLACK);
+    // yield();
     // displayArr[5]->fillScreen(ILI9341_BLUE);
     // /*initialize touchscreens */
     // touchArr[0] = new XPT2046_Touchscreen(26);

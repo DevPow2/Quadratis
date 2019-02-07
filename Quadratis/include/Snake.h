@@ -23,7 +23,7 @@ class Snake : public Game
     int beenHeadY[470];
     int beenHeadOnDisplay[470];
     int changeX = 0;
-    int changeY = 10;
+    int changeY = -10;
     const int width = 10;
     const int height = 10;
   };
