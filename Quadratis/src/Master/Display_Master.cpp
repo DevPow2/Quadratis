@@ -1,11 +1,16 @@
 #include "Display_Master.h"
-
+// This is calibration data for the raw touch data to the screen coordinates
+#define TS_MINX 150
+#define TS_MINY 130
+#define TS_MAXX 3800
+#define TS_MAXY 4000
 Display_Master::Display_Master() // initialize all displays
 {
 
     /*initialize displays */
     displaylocation.displayNumber = 0;
     Serial.println("Setting up displays");
+<<<<<<< HEAD
     
     displayArr[0] = new Adafruit_ILI9341(22, 5);
     // 
@@ -46,11 +51,32 @@ Display_Master::Display_Master() // initialize all displays
     // {
     //     touchArr[i]->begin();
     // }
+=======
 
-    // if (!SD.begin(14))
-    // {
-    //     Serial.println("failed!");
-    // }
+    displayArr[0] = new Adafruit_ILI9341(27, 5);
+    displayArr[1] = new Adafruit_ILI9341(2, 5);
+    displayArr[2] = new Adafruit_ILI9341(22, 5);
+    displayArr[3] = new Adafruit_ILI9341(32, 5);
+    displayArr[4] = new Adafruit_ILI9341(4, 5);
+
+    for (int i = 0; i < AMOUNT_DISPLAYS; i++)
+    {
+        displayArr[i]->begin();
+        delay(10);
+    }
+
+    displayArr[0]->fillScreen(ILI9341_GREEN);
+    delay(5000);
+    displayArr[1]->fillScreen(ILI9341_PINK);
+    delay(5000);
+    displayArr[2]->fillScreen(ILI9341_CYAN);
+    delay(5000);
+    displayArr[3]->fillScreen(ILI9341_YELLOW);
+    delay(5000);
+    displayArr[4]->fillScreen(ILI9341_RED);
+    delay(5000);
+>>>>>>> f687a50b624b305582c4b41d63d8ac2316874fbc
+
     Serial.println("OK!");
 }
 
@@ -215,8 +241,3 @@ int Display_Master::getNextScreen()
     }
     return -1;
 }
-
-// void Display_Master::bmpDraw(int display, Image image, int x, int y)
-// {
-//     displayArr[0]->drawRGBBitmap(0, 0, (uint16_t *)image.pixel_data, image.width, image.height);
-// }

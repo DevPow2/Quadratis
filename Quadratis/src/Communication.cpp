@@ -3,7 +3,6 @@
 Communication::Communication()
 {
     Serial2.begin(9600, SERIAL_8N1, TX_COMMUNICATION, RX_COMMUNICATION); //Hardware serial
-    // Serial2.setTimeout(100);
 }
 
 Communication::~Communication()
@@ -37,15 +36,13 @@ String Communication::readSerial()
     return "";
 }
 
-
 void Communication::writeSerial(String message)
 {
     // char tempArray[temp.length() + 1];
     // temp.toCharArray(tempArray, temp.length());
-    
+
     if (Serial2.available() > 0)
     {
         Serial2.println(message);
     }
-    
 }
