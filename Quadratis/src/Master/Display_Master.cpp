@@ -203,13 +203,7 @@ int Display_Master::checkCollision(int *x, int *y, int *changeX, int *changeY)
 int Display_Master::getNextScreen()
 {
     displaylocation.displayNumber += 1;
-    if(lastscreen == 2 && displaylocation.displayNumber == 3)
-    {
-        displaylocation.displayNumber = 2;
-    }
     if(displaylocation.displayNumber > 4) displaylocation.displayNumber = 0;
-    
-    lastscreen = displaylocation.displayNumber;
     return displaylocation.displayNumber;
 }
 

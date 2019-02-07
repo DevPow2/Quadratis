@@ -41,8 +41,8 @@ void Snake::generateFood()
 {
     // int bla = 240 / 30;
     // int bla2 = 320 / 30;
-    food.x = 100;
-    food.y = 200;
+    food.x = 200;
+    food.y = 100;
     food.display = displays->getCurrentDisplay();
     displays->drawRect(food.display, food.x, food.y, snake.width, snake.height, ILI9341_RED); //draws a blue rectangle
 }
